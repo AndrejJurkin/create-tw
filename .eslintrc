@@ -22,25 +22,7 @@
     "no-shadow": 1,
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
-    "import/order": [
-      "error",
-      {
-        "groups": [
-          "type",
-          "builtin",
-          "external",
-          "internal",
-          ["parent", "sibling", "index"],
-          "unknown"
-        ],
-        "newlines-between": "never",
-        "alphabetize": {
-          "order": "asc",
-          "caseInsensitive": true
-        },
-        "warnOnUnassignedImports": true
-      }
-    ]
+    "import/order": "off"
   },
   "settings": {
     "import/resolver": {
