@@ -1,7 +1,10 @@
-import inquirer from "inquirer";
 import { Command } from "commander";
 import { getVersion } from "../utils/getVersion";
-import validateAppName from "../utils/validateAppName";
+import readAppName from "./inputs/readAppName";
+import readLanguage from "./inputs/readLanguage";
+import readAppType from "./inputs/readAppType";
+import readDependencies from "./inputs/readDependencies";
+import readPlugins from "./inputs/readPlugins";
 
 // TODO: Move to constants
 const APP_NAME = "create-tailwind-app";
@@ -11,26 +14,33 @@ interface Flags {
   installDependencies: boolean;
 }
 
-const supportedDependencies = ["prettier", "clsx"];
+export const supportedDependencies = ["prettier", "clsx"];
 
-const supportedPlugins = [
+export const supportedPlugins = [
   "@tailwindcss/ui",
   "@tailwindcss/typography",
   "@tailwindcss/forms",
   "@tailwindcss/aspect-ratio",
 ];
 
-const supportedAppTypes = ["nextjs", "vanilla"];
+export const supportedAppTypes = [
+  "NextJS",
+  "Vanilla",
+  "React (Vite)",
+  "Vue",
+  "Svelte",
+];
 
-type Dependencies = typeof supportedDependencies[number];
-type Plugins = typeof supportedPlugins[number];
-type AppType = typeof supportedAppTypes[number];
+export type Dependencies = typeof supportedDependencies[number];
+export type Plugins = typeof supportedPlugins[number];
+export type AppType = typeof supportedAppTypes[number];
+export type Language = "TypeScript" | "JavaScript";
 
-interface UserInput {
+export interface UserInput {
   appName: string;
   appType: AppType;
   options: Flags;
-  language: "typescript" | "javascript";
+  language: Language;
   dependencies: Dependencies[];
   plugins: Plugins[];
 }
@@ -42,7 +52,7 @@ const defaults: UserInput = {
     initGit: false,
     installDependencies: false,
   },
-  language: "typescript",
+  language: "TypeScript",
   plugins: [] as Plugins[],
   dependencies: [] as Dependencies[],
 };
@@ -68,75 +78,13 @@ export async function readInput() {
   const appNameArg = program.args[0];
 
   if (!appNameArg) {
-    const { appName } = await inquirer.prompt<Pick<UserInput, "appName">>({
-      name: "appName",
-      type: "input",
-      message: "What will your project be called?",
-      default: defaults.appName,
-      validate: validateAppName,
-      transformer: (i: string) => {
-        return i.trim();
-      },
-    });
-
-    input.appName = appName;
+    input.appName = await readAppName(defaults);
   }
 
-  const { language } = await inquirer.prompt<{
-    language: "javascript" | "typescript";
-  }>({
-    name: "language",
-    type: "list",
-    message: "What language will your project be written in?",
-    choices: [
-      { name: "TypeScript", value: "typescript", short: "typescript" },
-      { name: "JavaScript", value: "javascript", short: "javascript" },
-    ],
-    default: "typescript",
-  });
-
-  input.language = language;
-
-  const { appType } = await inquirer.prompt<{
-    appType: AppType;
-  }>({
-    name: "appType",
-    type: "list",
-    message: "What type of application will you be creating?",
-    choices: supportedAppTypes.map((t) => ({
-      name: t,
-      value: t,
-    })),
-    default: "typescript",
-  });
-
-  input.appType = appType;
-
-  const { dependencies } = await inquirer.prompt<
-    Pick<UserInput, "dependencies">
-  >({
-    name: "dependencies",
-    type: "checkbox",
-    message: "Which dependencies would you like to include?",
-    choices: supportedDependencies.map((dependency) => ({
-      name: dependency,
-      checked: false,
-    })),
-  });
-
-  input.dependencies = dependencies;
-
-  const { plugins } = await inquirer.prompt<Pick<UserInput, "plugins">>({
-    name: "plugins",
-    type: "checkbox",
-    message: "Which plugins would you like to include?",
-    choices: supportedPlugins.map((dependency) => ({
-      name: dependency,
-      checked: false,
-    })),
-  });
-
-  input.plugins = plugins;
+  input.language = await readLanguage();
+  input.appType = await readAppType(supportedAppTypes);
+  input.dependencies = await readDependencies(supportedDependencies);
+  input.plugins = await readPlugins(supportedPlugins);
 
   return input;
 }
