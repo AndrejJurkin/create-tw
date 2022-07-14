@@ -4,6 +4,9 @@
   "description": "TBD",
   "main": "index.js",
   "scripts": {
+    "build": "tsup src/index.ts --format esm --clean --sourcemap --minify --metafile",
+    "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.mjs\"",
+    "start": "node dist/index.mjs",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
