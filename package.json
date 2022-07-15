@@ -5,13 +5,21 @@
   "main": "index.js",
   "scripts": {
     "build": "tsup src/index.ts --format esm --clean --sourcemap --minify --metafile",
-    "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.mjs\"",
-    "start": "node dist/index.mjs",
+    "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js\"",
+    "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
     "url": "TBD"
+  },
+  "type": "module",
+  "exports": "./dist/index.js",
+  "bin": {
+    "create-t3-app": "./dist/index.js"
+  },
+  "engines": {
+    "node": ">=14.16"
   },
   "keywords": [
     "tailwindcss",
