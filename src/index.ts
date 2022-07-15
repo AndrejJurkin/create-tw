@@ -1,4 +1,5 @@
 import { readInput } from "./cli/readInput";
+import createProject from "./output/createProject";
 import { logger } from "./utils/logger";
 
 async function main() {
@@ -6,6 +7,7 @@ async function main() {
 
   const input = await readInput();
   logger.success(`User input: ${JSON.stringify(input, null, 2)}`);
+  createProject(input);
 
   process.exit(0);
 }
