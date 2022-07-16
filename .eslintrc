@@ -22,7 +22,14 @@
     "no-shadow": 1,
     "import/no-named-as-default": 0,
     "import/no-named-as-default-member": 0,
-    "import/order": "off"
+    "import/order": "off",
+
+    // TODO: These shold be enabled, but for some reason it currently doesn't work as expected
+    "@typescript-eslint/no-unsafe-assignment": "off",
+    "@typescript-eslint/no-unsafe-call": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unsafe-return": "off",
+    "@typescript-eslint/no-unsafe-argument": "off"
   },
   "settings": {
     "import/resolver": {
