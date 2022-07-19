@@ -1,3 +1,6 @@
+import getPackageManager, {
+  PackageManager,
+} from "./../utils/getPackageManager";
 import { Command } from "commander";
 import { getVersion } from "../utils/getVersion";
 import readAppName from "./inputs/readAppName";
@@ -26,7 +29,7 @@ export const supportedPlugins = [
 export const supportedAppTypes = [
   "NextJS",
   "Vanilla",
-  "React (Vite)",
+  "React",
   "Vue",
   "Svelte",
 ];
@@ -43,6 +46,7 @@ export interface UserInput {
   language: Language;
   dependencies: Dependencies[];
   plugins: Plugins[];
+  packageManager: PackageManager;
 }
 
 const defaults: UserInput = {
@@ -55,6 +59,7 @@ const defaults: UserInput = {
   language: "TypeScript",
   plugins: [] as Plugins[],
   dependencies: [] as Dependencies[],
+  packageManager: getPackageManager(),
 };
 
 export async function readInput() {

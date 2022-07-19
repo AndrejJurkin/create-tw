@@ -6,8 +6,6 @@ import chalk from "chalk";
 import path from "path";
 import ora from "ora";
 import fs from "fs-extra";
-import getTemplateDir from "./utils/getTemplateDir.js";
-import execAsync from "./utils/execAsync";
 
 async function main() {
   logger.info("Welcome to create-tailwind-app!");
@@ -15,22 +13,18 @@ async function main() {
   const input = await readInput();
   const pkgManager = getPackageManager();
   const projectDir = path.resolve(process.cwd(), input.appName);
-  const templateDir = getTemplateDir(input);
 
   logger.info(`\nUsing: ${chalk.cyan.bold(pkgManager)}\n`);
 
   // Copy the template to the project directory
   const spinner = ora(`Scaffolding project in ${projectDir}`).start();
   // TODO: Check if exists and ask to overwrite
-  // If the project directory exists, remove it
+  // Ask to overwrite if exists
   if (fs.existsSync(projectDir)) {
     fs.removeSync(projectDir);
   }
 
-  await fs.mkdir(projectDir);
-  await execAsync(
-    `yarn create vite ${input.appName as string} --template vanilla`,
-  );
+  await createProject(input);
 
   spinner.succeed(
     `Finished scaffolding ${chalk.green.bold(input.appName)} project base.`,
