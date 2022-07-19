@@ -13,7 +13,9 @@ export default async function installPackages(options: Options) {
 
   const installCommand = packageManager === "npm" ? "install" : "add";
   const flags = dev ? "-D" : "";
-  const cmd = `${installCommand} ${flags} ${packages.join(" ")}`;
+  const cmd = `${
+    packageManager as string
+  } ${installCommand} ${flags} ${packages.join(" ")}`;
 
   await execAsync(cmd, { cwd: projectDir });
 }

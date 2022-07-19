@@ -6,6 +6,7 @@ import chalk from "chalk";
 import path from "path";
 import ora from "ora";
 import fs from "fs-extra";
+import installTailwind from "./output/installTailwind.js";
 
 async function main() {
   logger.info("Welcome to create-tailwind-app!");
@@ -29,6 +30,8 @@ async function main() {
   spinner.succeed(
     `Finished scaffolding ${chalk.green.bold(input.appName)} project base.`,
   );
+
+  await installTailwind(input, projectDir);
 
   // Get package.json
   const packageJson = await fs.readJSON(path.join(projectDir, "package.json"));
