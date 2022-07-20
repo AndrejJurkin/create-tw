@@ -9,7 +9,6 @@ export default async function createProject(input: UserInput) {
 }
 
 function createInstallCommand(input: UserInput) {
-  console.log("Input", input);
   switch (input.appType) {
     case "NextJS":
       return createNextCommand(input);

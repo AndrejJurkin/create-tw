@@ -44,3 +44,7 @@ temp/
 ._*
 .DS_Store
 Thumbs.db
+
+# TEMPLATES
+next
+vanilla
