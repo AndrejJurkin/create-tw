@@ -10,9 +10,10 @@ export default async function installTailwind(
   input: UserInput,
   projectDir: string,
 ) {
-  // await installDependencies(input, projectDir);
+  await installDependencies(input, projectDir);
   await createTailwindConfig(input, projectDir);
   await createPostCssConfig(input, projectDir);
+  await copyTailwindDirectives(projectDir);
 }
 
 async function installDependencies(input: UserInput, projectDir: string) {
@@ -45,6 +46,21 @@ async function createPostCssConfig(input: UserInput, projectDir: string) {
   const spinner = ora(`Creating postcss.config.js`).start();
   await fs.copy(postCssConfig, path.join(projectDir, "postcss.config.js"));
   spinner.succeed(`postcss.config.js created`);
+}
+
+async function copyTailwindDirectives(projectDir: string) {
+  const directives = path.join(
+    PKG_ROOT,
+    "src",
+    "templates",
+    "tailwind",
+    "common",
+    "directives.css",
+  );
+
+  const spinner = ora(`Copying Tailwind directives`).start();
+  await fs.copy(directives, path.join(projectDir, "tailwind.css"));
+  spinner.succeed(`Finished copying Tailwind directives`);
 }
 
 function getTailwindTemplateDir({ appType }: UserInput) {
