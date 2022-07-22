@@ -55,7 +55,6 @@ async function copyTailwindDirectives(projectDir: string) {
     PKG_ROOT,
     "src",
     "templates",
-    "tailwind",
     "common",
     "directives.css",
   );
@@ -78,5 +77,5 @@ async function copyTailwindTemplate(input: UserInput, projectDir: string) {
 }
 
 function getTailwindTemplateDir({ appType }: UserInput) {
-  return path.join(PKG_ROOT, "src", "templates", "tailwind", appType);
+  return path.join(PKG_ROOT, "src", "templates", appType);
 }
