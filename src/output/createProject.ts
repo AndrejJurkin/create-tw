@@ -1,10 +1,8 @@
 import execAsync from "../utils/execAsync.js";
-import { logger } from "../utils/logger.js";
-import { AppType, Language, UserInput } from "./../cli/readInput";
+import { Language, UserInput } from "./../cli/readInput";
 
 export default async function createProject(input: UserInput) {
   const command = createInstallCommand(input);
-  logger.info("Running:", command);
   await execAsync(command);
 }
 

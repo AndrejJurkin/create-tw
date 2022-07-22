@@ -47,4 +47,5 @@ Thumbs.db
 
 # TEMPLATES
 next
-vanilla
+/vanilla
+vanilla-ts

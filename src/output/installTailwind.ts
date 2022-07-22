@@ -10,10 +10,11 @@ export default async function installTailwind(
   input: UserInput,
   projectDir: string,
 ) {
-  await installDependencies(input, projectDir);
+  // await installDependencies(input, projectDir);
   await createTailwindConfig(input, projectDir);
   await createPostCssConfig(input, projectDir);
   await copyTailwindDirectives(projectDir);
+  await copyTailwindTemplate(input, projectDir);
 }
 
 async function installDependencies(input: UserInput, projectDir: string) {
@@ -21,6 +22,7 @@ async function installDependencies(input: UserInput, projectDir: string) {
   const packages = ["tailwindcss", "postcss", "autoprefixer", ...plugins];
 
   const spinner = ora(`Installing TailwindCSS dependencies`).start();
+  // TODO: Add to package.json without installing
   await installPackages({
     dev: true,
     projectDir,
@@ -61,6 +63,18 @@ async function copyTailwindDirectives(projectDir: string) {
   const spinner = ora(`Copying Tailwind directives`).start();
   await fs.copy(directives, path.join(projectDir, "tailwind.css"));
   spinner.succeed(`Finished copying Tailwind directives`);
+}
+
+async function copyTailwindTemplate(input: UserInput, projectDir: string) {
+  const tailwindTemplateDir = getTailwindTemplateDir(input);
+  // TODO: Copy based on app type
+  const index = path.join(tailwindTemplateDir, "index.html");
+  const main = path.join(tailwindTemplateDir, "main.js");
+
+  const spinner = ora(`Copying Tailwind template`).start();
+  await fs.copy(index, path.join(projectDir, "index.html"));
+  await fs.copy(main, path.join(projectDir, "main.js"));
+  spinner.succeed(`Finished copying Tailwind template`);
 }
 
 function getTailwindTemplateDir({ appType }: UserInput) {
