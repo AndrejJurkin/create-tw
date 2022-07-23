@@ -11,6 +11,10 @@ interface Options {
 export default async function installPackages(options: Options) {
   const { packageManager, dev, projectDir, packages } = options;
 
+  if (!packages.length) {
+    return;
+  }
+
   const installCommand = packageManager === "npm" ? "install" : "add";
   const flags = dev ? "-D" : "";
   const cmd = `${

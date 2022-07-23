@@ -1,6 +1,9 @@
 import chalk from "chalk";
 
 export const logger = {
+  log: (...args: unknown[]) => {
+    console.log(...args);
+  },
   error(...args: unknown[]) {
     console.log(chalk.red(...args));
   },

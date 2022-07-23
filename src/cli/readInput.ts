@@ -29,9 +29,9 @@ export const supportedPlugins = [
 export const supportedAppTypes = [
   "NextJS",
   "Vanilla",
-  "React",
-  "Vue",
-  "Svelte",
+  // "React",
+  // "Vue",
+  // "Svelte",
 ];
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -71,12 +71,6 @@ export async function readInput() {
       "A CLI for quickly creating applications based on Tailwind CSS",
     )
     .argument("[app]", "The name of the application")
-    .option("--git", "Initialize a git repository", defaults.options.initGit)
-    .option(
-      "--deps",
-      "Install dependencies",
-      defaults.options.installDependencies,
-    )
     .version(getVersion())
     .parse(process.argv);
 

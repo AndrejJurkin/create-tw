@@ -7,6 +7,7 @@ import path from "path";
 import ora from "ora";
 import fs from "fs-extra";
 import installTailwind from "./output/installTailwind.js";
+import installDependencies from "./output/installDependencies.js";
 
 async function main() {
   logger.info("Welcome to create-tailwind-app!");
@@ -32,10 +33,18 @@ async function main() {
   );
 
   await installTailwind(input, projectDir);
+  await installDependencies(input, projectDir);
 
-  // Get package.json
-  const packageJson = await fs.readJSON(path.join(projectDir, "package.json"));
-  console.log("packageJson", packageJson);
+  logger.info(`\nProject created in ${chalk.green.bold(projectDir)}\n`);
+  logger.info(`${chalk.cyan.bold(`cd ${input.appName}`)}`);
+  logger.info(
+    `${chalk.cyan.bold(
+      `${getPackageManager()} ${
+        getPackageManager() === "npm" ? "run" : ""
+      } dev`,
+    )}\n`,
+  );
+  logger.log("Happy coding!");
 
   process.exit(0);
 }
