@@ -3,3 +3,6 @@ build/
 dist/
 next
 templates/
+/vanilla
+/vanilla-ts
+/nextjs
