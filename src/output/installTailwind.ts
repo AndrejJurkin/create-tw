@@ -5,6 +5,7 @@ import path from "path";
 import installPackages from "../utils/installPackages.js";
 import getPackageManager from "../utils/getPackageManager.js";
 import { PKG_ROOT } from "../constants.js";
+import addPluginsTransformer from "./transformers/addPluginsTransformer";
 
 export default async function installTailwind(
   input: UserInput,
@@ -38,6 +39,16 @@ async function createTailwindConfig(input: UserInput, projectDir: string) {
 
   const spinner = ora(`Creating tailwind.config.js`).start();
   await fs.copy(tailwindConfig, path.join(projectDir, "tailwind.config.js"));
+
+  // Parse tailwind.config.js
+  const tailwindConfigSource = await fs.readFile(
+    path.join(projectDir, "tailwind.config.js"),
+  );
+  const transformer = addPluginsTransformer(input.plugins);
+  const transformed = transformer(tailwindConfigSource);
+  // Write to file
+  await fs.writeFile(path.join(projectDir, "tailwind.config.js"), transformed);
+
   spinner.succeed(`tailwind.config.js created`);
 }
 
