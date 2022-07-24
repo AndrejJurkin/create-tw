@@ -6,10 +6,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Crete Tailwind App</title>
   </head>
-  <body>
-    <main>
-      <h1 class="text-7xl">Create Tailwind App</h1>
-    </main>  
+
+  <body class="h-screen bg-gray-900 flex flex-col text-white">
+    <header class="py-16">
+      <h1 class="text-4xl font-bold text-center mb-6">Create Tailwind App</h1>
+      <div class="flex flex-row justify-center items-center gap-4">
+        <a
+          class="github-button"
+          href="https://github.com/andrejjurkin/create-tailwind-app"
+          data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+          data-icon="octicon-star"
+          data-size="large"
+          data-show-count="true"
+          aria-label="Star andrejjurkin/create-tailwind-app on GitHub"
+          >Star</a
+        >
+        <a
+          class="github-button"
+          href="https://github.com/andrejjurkin/create-tailwind-app/discussions"
+          data-color-scheme="no-preference: dark; light: dark; dark: dark;"
+          data-icon="octicon-comment-discussion"
+          data-size="large"
+          aria-label="Discuss andrejjurkin/create-tailwind-app on GitHub"
+          >Discuss</a
+        >
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <section class="text-center">
+        <div class="w-full grid place-items-center p-12">
+          <a href="https://vitejs.dev/">
+            <img src="/vite.svg" alt="Vite" class="h-24" />
+          </a>
+        </div>
+        <h2 class="text-3xl font-bold text-center">Created With Vite</h2>
+        <p class="mb-6">The Next Generation Frontend Tooling</p>
+        <ul
+          class="flex flex-row items-center w-full gap-8 justify-center text-blue-300 font-medium"
+        >
+          <li>
+            <a href="https://vitejs.dev/">Learn More</a>
+          </li>
+          <li>
+            <a href="https://vitejs.dev/guide/why.html">Why Vite?</a>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer class="px-8 py-12 border-t border-gray-800">
+      <div class="px-8 font-medium text-center">
+        <a href="https://github.com/andrejjurkin/create-tailwind-app">
+          Create Tailwind App
+        </a>
+      </div>
+    </footer>
     <script type="module" src="/main.js"></script>
+    <!-- Place this tag in your head or just before your close body tag. -->
+    <script async defer src="https://buttons.github.io/buttons.js"></script>
   </body>
 </html>
