@@ -1,13 +1,10 @@
 import getPackageManager, {
   PackageManager,
 } from "./../utils/getPackageManager";
+import inquirer from "inquirer";
 import { Command } from "commander";
 import { getVersion } from "../utils/getVersion";
-import readAppName from "./inputs/readAppName";
-import readLanguage from "./inputs/readLanguage";
-import readAppType from "./inputs/readAppType";
-import readDependencies from "./inputs/readDependencies";
-import readPlugins from "./inputs/readPlugins";
+import validateAppName from "../utils/validateAppName.js";
 
 // TODO: Move to constants
 const APP_NAME = "create-tailwind-app";
@@ -79,7 +76,7 @@ export async function readInput() {
   const appNameArg = program.args[0];
 
   if (!appNameArg) {
-    input.appName = await readAppName(defaults);
+    input.appName = await readAppName();
   }
 
   input.language = await readLanguage();
@@ -91,4 +88,81 @@ export async function readInput() {
   input.plugins = await readPlugins(supportedPlugins);
 
   return input;
+}
+
+async function readAppName() {
+  const { appName } = await inquirer.prompt<Pick<UserInput, "appName">>({
+    name: "appName",
+    type: "input",
+    message: "What will your project be called?",
+    default: defaults.appName,
+    validate: validateAppName,
+    transformer: (i: string) => {
+      return i.trim();
+    },
+  });
+
+  return appName;
+}
+
+async function readAppType(types: AppType[]) {
+  const { appType } = await inquirer.prompt<{
+    appType: AppType;
+  }>({
+    name: "appType",
+    type: "list",
+    message: "What type of application will you be creating?",
+    choices: types.map((t) => ({
+      name: t,
+      value: t,
+    })),
+    default: "typescript",
+  });
+
+  return appType;
+}
+
+async function readDependencies(choices: string[]) {
+  const { dependencies } = await inquirer.prompt<
+    Pick<UserInput, "dependencies">
+  >({
+    name: "dependencies",
+    type: "checkbox",
+    message: "Which dependencies would you like to include?",
+    choices: choices.map((dependency) => ({
+      name: dependency,
+      checked: false,
+    })),
+  });
+
+  return dependencies;
+}
+
+async function readLanguage() {
+  const { language } = await inquirer.prompt<{ language: Language }>({
+    name: "language",
+    type: "list",
+    message: "What language will your project be written in?",
+    choices: [
+      { name: "TypeScript", value: "TypeScript", short: "TypeScript" },
+      { name: "JavaScript", value: "JavaScript", short: "JavaScript" },
+    ],
+    default: "typescript",
+  });
+
+  return language;
+}
+
+async function readPlugins(choices: string[]) {
+  const { plugins } = await inquirer.prompt<Pick<UserInput, "plugins">>({
+    name: "plugins",
+    type: "checkbox",
+    message: "Which plugins would you like to include?",
+    choices: choices.map((dependency) => ({
+      name: dependency,
+      checked: false,
+    })),
+  });
+
+  return plugins;
 }

@@ -1,13 +1,13 @@
 import { readInput } from "./cli/readInput";
-import createProject from "./output/createProject";
 import getPackageManager from "./utils/getPackageManager";
 import { logger } from "./utils/logger";
 import chalk from "chalk";
 import path from "path";
 import ora from "ora";
 import fs from "fs-extra";
-import installTailwind from "./output/installTailwind.js";
-import installDependencies from "./output/installDependencies.js";
+import installTailwind from "./cli/output/installTailwind.js";
+import installDependencies from "./cli/output/installDependencies.js";
+import createProject from "./cli/output/createProject.js";
 
 async function main() {
   logger.info("Welcome to create-tailwind-app!");

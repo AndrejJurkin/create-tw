@@ -2,8 +2,8 @@ import chalk from "chalk";
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
-import { UserInput } from "../cli/readInput.js";
-import { getTailwindTemplateDir } from "../utils/getTailwindTemplateDir.js";
+import { UserInput } from "../readInput.js";
+import { getTailwindTemplateDir } from "../../utils/getTailwindTemplateDir.js";
 
 export default async function copyTailwindTemplate(
   input: UserInput,

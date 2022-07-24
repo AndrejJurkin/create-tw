@@ -1,10 +1,10 @@
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
-import { UserInput } from "../cli/readInput.js";
-import { COMMON_TEMPLATES_ROOT } from "../constants.js";
-import getPackageManager from "../utils/getPackageManager.js";
-import installPackages from "../utils/installPackages.js";
+import { UserInput } from "../readInput.js";
+import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
+import getPackageManager from "../../utils/getPackageManager.js";
+import installPackages from "../../utils/installPackages.js";
 
 export default async function installDependencies(
   input: UserInput,

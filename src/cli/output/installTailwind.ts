@@ -1,12 +1,12 @@
 import fs from "fs-extra";
-import { UserInput } from "../cli/readInput.js";
+import { UserInput } from "../readInput.js";
 import ora from "ora";
 import path from "path";
-import { COMMON_TEMPLATES_ROOT } from "../constants.js";
-import addPluginsTransformer from "./transformers/addPluginsTransformer";
-import getFileName from "../utils/getFileName.js";
-import { getTailwindTemplateDir } from "../utils/getTailwindTemplateDir.js";
+import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
+import getFileName from "../../utils/getFileName.js";
+import { getTailwindTemplateDir } from "../../utils/getTailwindTemplateDir.js";
 import copyTailwindTemplate from "./copyTailwindTemplate.js";
+import addPluginsTransformer from "./addPluginsTransformer.js";
 
 export default async function installTailwind(
   input: UserInput,

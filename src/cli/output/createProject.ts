@@ -1,5 +1,5 @@
-import execAsync from "../utils/execAsync.js";
-import { UserInput } from "./../cli/readInput";
+import execAsync from "../../utils/execAsync.js";
+import { UserInput } from "../readInput.js";
 
 // Creates project using default create scripts like create-next-app or create-vite
 export default async function createProject(input: UserInput) {
