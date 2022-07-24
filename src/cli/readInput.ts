@@ -37,10 +37,12 @@ export type Dependencies = typeof supportedDependencies[number];
 export type Plugins = typeof supportedPlugins[number];
 export type AppType = typeof supportedAppTypes[number];
 export type Language = "TypeScript" | "JavaScript";
+export type AppId = "next" | "next-ts" | "vanilla" | "vanilla-ts";
 
 export interface UserInput {
   appName: string;
   appType: AppType;
+  appId: AppId;
   options: Flags;
   language: Language;
   dependencies: Dependencies[];
@@ -51,6 +53,7 @@ export interface UserInput {
 const defaults: UserInput = {
   appName: "create-tailwind-app",
   appType: "nextjs",
+  appId: "next",
   options: {
     initGit: false,
     installDependencies: false,
@@ -81,6 +84,9 @@ export async function readInput() {
 
   input.language = await readLanguage();
   input.appType = await readAppType(supportedAppTypes);
+  input.appId = `${input.appType.toLocaleLowerCase()}${
+    input.language === "TypeScript" ? "-ts" : ""
+  }` as AppId;
   input.dependencies = await readDependencies(supportedDependencies);
   input.plugins = await readPlugins(supportedPlugins);
 

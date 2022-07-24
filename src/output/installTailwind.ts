@@ -2,9 +2,11 @@ import fs from "fs-extra";
 import { UserInput } from "../cli/readInput.js";
 import ora from "ora";
 import path from "path";
-import { PKG_ROOT } from "../constants.js";
+import { COMMON_TEMPLATES_ROOT } from "../constants.js";
 import addPluginsTransformer from "./transformers/addPluginsTransformer";
 import getFileName from "../utils/getFileName.js";
+import { getTailwindTemplateDir } from "../utils/getTailwindTemplateDir.js";
+import copyTailwindTemplate from "./copyTailwindTemplate.js";
 
 export default async function installTailwind(
   input: UserInput,
@@ -12,7 +14,7 @@ export default async function installTailwind(
 ) {
   await createTailwindConfig(input, projectDir);
   await createPostCssConfig(input, projectDir);
-  await copyTailwindDirectives(projectDir);
+  await copyTailwindDirectives(input, projectDir);
   await copyTailwindTemplate(input, projectDir);
 }
 
@@ -47,33 +49,23 @@ async function createPostCssConfig(input: UserInput, projectDir: string) {
   spinner.succeed(`${fileName} created`);
 }
 
-async function copyTailwindDirectives(projectDir: string) {
-  const directives = path.join(
-    PKG_ROOT,
-    "src",
-    "templates",
-    "common",
-    "directives.css",
-  );
+async function copyTailwindDirectives(input: UserInput, projectDir: string) {
+  const directives = path.join(COMMON_TEMPLATES_ROOT, "directives.css");
 
   const spinner = ora(`Copying Tailwind directives`).start();
-  await fs.copy(directives, path.join(projectDir, "tailwind.css"));
-  spinner.succeed(`Finished copying Tailwind directives`);
+  await fs.copy(directives, getCssOutputPath(input, projectDir));
+  spinner.succeed(`Added Tailwind directives`);
 }
 
-async function copyTailwindTemplate(input: UserInput, projectDir: string) {
-  const tailwindTemplateDir = getTailwindTemplateDir(input);
-
-  // TODO: Copy based on app type
-  const index = path.join(tailwindTemplateDir, "index.html");
-  const main = path.join(tailwindTemplateDir, "main.js");
-
-  const spinner = ora(`Copying Tailwind template`).start();
-  await fs.copy(index, path.join(projectDir, "index.html"));
-  await fs.copy(main, path.join(projectDir, "main.js"));
-  spinner.succeed(`Finished copying Tailwind template`);
-}
-
-function getTailwindTemplateDir({ appType }: UserInput) {
-  return path.join(PKG_ROOT, "src", "templates", appType);
+function getCssOutputPath({ appId }: UserInput, projectDir: string) {
+  switch (appId) {
+    case "next":
+      return path.join(projectDir, "src", "styles", "global.css");
+    case "vanilla":
+      return path.join(projectDir, "style.css");
+    case "vanilla-ts":
+    // Fall through
+    default:
+      return path.join(projectDir, "src", "style.css");
+  }
 }

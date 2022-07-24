@@ -12,6 +12,10 @@ export default function getPackageManager() {
     if (userAgent.includes("npm")) {
       return "npm";
     }
+
+    if (userAgent.includes("pnpm")) {
+      return "pnpm";
+    }
   }
 
   return "npm";

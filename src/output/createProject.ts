@@ -1,5 +1,5 @@
 import execAsync from "../utils/execAsync.js";
-import { Language, UserInput } from "./../cli/readInput";
+import { UserInput } from "./../cli/readInput";
 
 // Creates project using default create scripts like create-next-app or create-vite
 export default async function createProject(input: UserInput) {
@@ -29,26 +29,7 @@ function createInstallCommand(input: UserInput) {
 }
 
 function createViteCommand(input: UserInput) {
-  const { appName, packageManager, language } = input;
-
-  const templates: Record<Language, any> = {
-    JavaScript: {
-      Vanilla: "vanilla",
-      Vue: "vue",
-      React: "react",
-      Preact: "preact",
-      Lit: "lit",
-      Svelte: "svelte",
-    },
-    TypeScript: {
-      Vanilla: "vanilla-ts",
-      Vue: "vue-ts",
-      React: "react-ts",
-      Preact: "preact-ts",
-      Lit: "lit-ts",
-      Svelte: "svelte-ts",
-    },
-  };
+  const { appName, packageManager, appId } = input;
 
   const parts: string[] = [packageManager];
 
@@ -59,7 +40,7 @@ function createViteCommand(input: UserInput) {
   }
 
   parts.push(appName);
-  parts.push("--template", templates[language][input.appType]);
+  parts.push("--template", appId);
   return parts.join(" ");
 }
 
