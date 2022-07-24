@@ -1,6 +1,7 @@
 import execAsync from "../utils/execAsync.js";
 import { Language, UserInput } from "./../cli/readInput";
 
+// Creates project using default create scripts like create-next-app or create-vite
 export default async function createProject(input: UserInput) {
   const command = createInstallCommand(input);
   await execAsync(command);
@@ -23,7 +24,7 @@ function createInstallCommand(input: UserInput) {
     case "Svelte":
       return createViteCommand(input);
     default:
-      return createNextCommand(input);
+      throw new Error(`Unknown app type: ${input.appType}`);
   }
 }
 
