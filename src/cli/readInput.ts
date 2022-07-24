@@ -20,7 +20,6 @@ interface Flags {
 export const supportedDependencies = ["prettier", "clsx"];
 
 export const supportedPlugins = [
-  "@tailwindcss/ui",
   "@tailwindcss/typography",
   "@tailwindcss/forms",
   "@tailwindcss/aspect-ratio",
