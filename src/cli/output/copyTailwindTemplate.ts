@@ -75,6 +75,6 @@ async function copyNext(templateDir: string, projectDir: string) {
 async function copyNextTs(templateDir: string, projectDir: string) {
   await fs.copy(
     path.join(templateDir, "index.ts"),
-    path.join(projectDir, "pages", "index.ts"),
+    path.join(projectDir, "pages", "index.tsx"),
   );
 }
