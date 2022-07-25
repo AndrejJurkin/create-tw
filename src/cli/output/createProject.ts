@@ -3,6 +3,7 @@ import { UserInput } from "../readInput.js";
 
 /**
  * Create and execute the command to install the project.
+ *
  * @param input CLI input
  */
 export default async function createProject(input: UserInput) {
