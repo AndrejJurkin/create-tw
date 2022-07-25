@@ -34,7 +34,7 @@ export type Dependencies = typeof supportedDependencies[number];
 export type Plugins = typeof supportedPlugins[number];
 export type AppType = typeof supportedAppTypes[number];
 export type Language = "TypeScript" | "JavaScript";
-export type AppId = "next" | "next-ts" | "vanilla" | "vanilla-ts";
+export type AppId = "nextjs" | "nextjs-ts" | "vanilla" | "vanilla-ts";
 
 export interface UserInput {
   appName: string;

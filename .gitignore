@@ -46,6 +46,6 @@ temp/
 Thumbs.db
 
 # TEMPLATES
-next
+/next
 /vanilla
 /vanilla-ts

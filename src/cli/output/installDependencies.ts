@@ -6,6 +6,12 @@ import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
 
+/**
+ * Install dependencies for the project.
+ *
+ * @param input CLI input
+ * @param projectDir Path to the project directory
+ */
 export default async function installDependencies(
   input: UserInput,
   projectDir: string,

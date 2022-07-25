@@ -7,7 +7,14 @@ import getFileName from "../../utils/getFileName.js";
 import { getTailwindTemplateDir } from "../../utils/getTailwindTemplateDir.js";
 import copyTailwindTemplate from "./copyTailwindTemplate.js";
 import addPluginsTransformer from "./addPluginsTransformer.js";
+import { deleteFiles } from "./deleteFiles.js";
 
+/**
+ * Install all Tailwind dependencies and create Tailwind config files.
+ *
+ * @param input CLI input
+ * @param projectDir Path to the project directory
+ */
 export default async function installTailwind(
   input: UserInput,
   projectDir: string,
@@ -16,6 +23,7 @@ export default async function installTailwind(
   await createPostCssConfig(input, projectDir);
   await copyTailwindDirectives(input, projectDir);
   await copyTailwindTemplate(input, projectDir);
+  await deleteFiles(input, projectDir);
 }
 
 async function createTailwindConfig(input: UserInput, projectDir: string) {
@@ -59,8 +67,10 @@ async function copyTailwindDirectives(input: UserInput, projectDir: string) {
 
 function getCssOutputPath({ appId }: UserInput, projectDir: string) {
   switch (appId) {
-    case "next":
-      return path.join(projectDir, "src", "styles", "global.css");
+    case "nextjs":
+    // Fall through:
+    case "nextjs-ts":
+      return path.join(projectDir, "styles", "globals.css");
     case "vanilla":
       return path.join(projectDir, "style.css");
     case "vanilla-ts":

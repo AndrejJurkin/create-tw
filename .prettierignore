@@ -1,8 +1,6 @@
 node_modules
 build/
 dist/
-next
-templates/
 /vanilla
 /vanilla-ts
 /nextjs

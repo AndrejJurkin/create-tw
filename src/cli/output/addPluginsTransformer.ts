@@ -1,5 +1,11 @@
 import * as recast from "recast";
 
+/**
+ * Create recast transformer that adds tailwind plugins to tailwind.config.js
+ *
+ * @param plugins tailwind plugins
+ * @returns transformer function that adds tailwind plugins to tailwind.config.js
+ */
 const addPluginsTransformer = (plugins: string[]) => {
   return (code: any) => {
     const ast = recast.parse(code);

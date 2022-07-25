@@ -1,7 +1,10 @@
 import execAsync from "../../utils/execAsync.js";
 import { UserInput } from "../readInput.js";
 
-// Creates project using default create scripts like create-next-app or create-vite
+/**
+ * Create and execute the command to install the project.
+ * @param input CLI input
+ */
 export default async function createProject(input: UserInput) {
   const command = createInstallCommand(input);
   await execAsync(command);

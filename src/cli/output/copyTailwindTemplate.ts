@@ -5,6 +5,12 @@ import path from "path";
 import { UserInput } from "../readInput.js";
 import { getTailwindTemplateDir } from "../../utils/getTailwindTemplateDir.js";
 
+/**
+ * Copy the Tailwind template pages to the project directory.
+ *
+ * @param input CLI input
+ * @param projectDir Path to the project directory
+ */
 export default async function copyTailwindTemplate(
   input: UserInput,
   projectDir: string,
@@ -21,6 +27,13 @@ export default async function copyTailwindTemplate(
     case "vanilla-ts":
       await copyVanillaTs(tailwindTemplateDir, projectDir);
       break;
+    case "nextjs":
+      await copyNext(tailwindTemplateDir, projectDir);
+      break;
+    case "nextjs-ts":
+      await copyNextTs(tailwindTemplateDir, projectDir);
+      break;
+
     default:
       throw new Error(
         `Unknown app type for tailwind template output: ${appId}`,
@@ -49,5 +62,19 @@ async function copyVanillaTs(templateDir: string, projectDir: string) {
   await fs.copy(
     path.join(templateDir, "main.ts"),
     path.join(projectDir, "src/main.ts"),
+  );
+}
+
+async function copyNext(templateDir: string, projectDir: string) {
+  await fs.copy(
+    path.join(templateDir, "index.js"),
+    path.join(projectDir, "pages", "index.js"),
+  );
+}
+
+async function copyNextTs(templateDir: string, projectDir: string) {
+  await fs.copy(
+    path.join(templateDir, "index.ts"),
+    path.join(projectDir, "pages", "index.ts"),
   );
 }
