@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 import { readInput } from "./cli/readInput";
 import getPackageManager from "./utils/getPackageManager";
 import { logger } from "./utils/logger";
