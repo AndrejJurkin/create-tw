@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import inquirer from "inquirer";
 import { readInput } from "./cli/readInput";
 import getPackageManager from "./utils/getPackageManager";
 import { logger } from "./utils/logger";
@@ -21,9 +22,22 @@ async function main() {
 
   // Copy the template to the project directory
   const spinner = ora(`Scaffolding project in ${projectDir}`).start();
-  // TODO: Check if exists and ask to overwrite
-  // Ask to overwrite if exists
+
   if (fs.existsSync(projectDir)) {
+    spinner.stop();
+    // Ask to overwrite
+    const answer = await inquirer.prompt({
+      name: "overwrite",
+      type: "confirm",
+      message: `${chalk.yellow.bold(`Directory already exists. Overwrite?`)}`,
+    });
+    if (!answer.overwrite) {
+      spinner.stop();
+      logger.error("Aborting...");
+      process.exit(1);
+    }
+    spinner.start();
+
     fs.removeSync(projectDir);
   }
 

@@ -11,8 +11,9 @@ yarn create tw
 ```
 
 ### Scaffolding tools
+
 | Template   | Tool            |
-|------------|-----------------|
+|------------|:----------------|
 | Next.js    | create-next-app |
 | Next.js TS | create-next-app |
 | Vanilla    | create-vite     |
