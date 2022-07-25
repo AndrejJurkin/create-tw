@@ -1,6 +1,6 @@
 {
   "name": "create-tw",
-  "version": "0.0.2",
+  "version": "0.0.5",
   "description": "TBD",
   "main": "index.js",
   "repository": {
@@ -20,8 +20,9 @@
     "dev": "tsup src/index.ts --format esm --watch --clean --onSuccess \"node dist/index.js\"",
     "start": "node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
+    "release": "standard-version",
     "publish:beta": "npm run build && npm publish --tag beta",
-    "publish": "npm run build && npm publish"
+    "publish": " npm run build && npm publish"
   },
   "keywords": [
     "tailwindcss",
@@ -53,6 +54,7 @@
     "eslint-import-resolver-typescript": "^3.1.1",
     "eslint-plugin-import": "^2.26.0",
     "prettier": "^2.7.1",
+    "standard-version": "^9.5.0",
     "tsup": "^6.1.2",
     "typescript": "^4.7.4"
   }
