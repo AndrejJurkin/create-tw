@@ -73,12 +73,10 @@ export async function readInput() {
     .version(getVersion())
     .parse(process.argv);
 
-  const appNameArg = program.args[0];
+  console.log("Args: ", program.args);
+  console.log("Options: ", program.opts());
 
-  if (!appNameArg) {
-    input.appName = await readAppName();
-  }
-
+  input.appName = program.args[0] ?? (await readAppName());
   input.language = await readLanguage();
   input.appType = await readAppType(supportedAppTypes);
   input.appId = `${input.appType.toLocaleLowerCase()}${
