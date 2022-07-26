@@ -45,7 +45,8 @@ temp/
 .DS_Store
 Thumbs.db
 
-# TEMPLATES
+# TEMPLATE TESTS
 /next
+/next-ts
 /vanilla
 /vanilla-ts

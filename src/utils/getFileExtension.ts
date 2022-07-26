@@ -1,13 +1,11 @@
 import { UserInput } from "./../cli/readInput";
 
-export default function getFileExtension(input: UserInput) {
-  const { appType, language } = input;
-
-  const defaultExtension = language === "TypeScript" ? "ts" : "js";
+export default function getTailwindConfigExtension(input: UserInput) {
+  const { appType } = input;
 
   switch (appType) {
     case "NextJS":
-      return defaultExtension;
+      return "js";
     case "Vite":
     // Fall through
     case "Vanilla":
@@ -21,6 +19,6 @@ export default function getFileExtension(input: UserInput) {
     case "Svelte":
       return "cjs";
     default:
-      return defaultExtension;
+      return "js";
   }
 }

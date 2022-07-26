@@ -1,6 +1,6 @@
 import { UserInput } from "./../cli/readInput";
-import getFileExtension from "./getFileExtension.js";
+import getTailwindConfigExtension from "./getFileExtension.js";
 
 export default function getFileName(name: string, input: UserInput) {
-  return `${name}.${getFileExtension(input)}`;
+  return `${name}.${getTailwindConfigExtension(input)}`;
 }
