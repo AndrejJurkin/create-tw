@@ -1,4 +1,4 @@
-# Create TailwingCSS Project (create-tw)
+# Create TailwindCSS Project (create-tw)
 
 ### The easiest way to get started with TailwindCSS.
 
