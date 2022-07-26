@@ -6,16 +6,23 @@ It uses popular scaffolding scripts like `create-next-app` or `create-vite` to s
 
 ```bash
 npx create-tw@latest
-# or
+# OR
 yarn create tw
 ```
 
 ### Scaffolding tools
 
-| Template   | Tool            |
-|------------|:----------------|
-| Next.js    | create-next-app |
-| Next.js TS | create-next-app |
-| Vanilla    | create-vite     |
-| Vanilla TS | create-vite     |
+|id        | Template   | Tool            |
+|:---------|:-----------|:----------------|
+|nextjs    | Next.js    | create-next-app |
+|nextjs-ts | Next.js TS | create-next-app |
+|vanilla   | Vanilla    | create-vite     |
+|vanilla-ts| Vanilla TS | create-vite     |
 
+You can include template id to skip input steps
+
+```bash
+npx create-tw@latest --template <id>
+# OR
+yarn create tw --template <id>
+```
