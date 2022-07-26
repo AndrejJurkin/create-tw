@@ -12,7 +12,8 @@ import installDependencies from "./cli/output/installDependencies.js";
 import createProject from "./cli/output/createProject.js";
 
 async function main() {
-  logger.info("Welcome to create-tailwind-app!");
+  logger.info("Welcome to create-tw!\n");
+  logger.success("The easiest way to create a Tailwind project\n");
 
   const input = await readInput();
   const pkgManager = getPackageManager();

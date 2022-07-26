@@ -1,5 +1,7 @@
-import execAsync from "../../utils/execAsync.js";
+import { PackageManager } from "./../../utils/getPackageManager";
 import { UserInput } from "../readInput.js";
+import { resolve } from "path";
+import execAsync from "../../utils/execAsync.js";
 
 /**
  * Create and execute the command to install the project.
@@ -35,7 +37,7 @@ function createInstallCommand(input: UserInput) {
 function createViteCommand(input: UserInput) {
   const { appName, packageManager, appId } = input;
 
-  const parts: string[] = [packageManager];
+  const parts: string[] = [resolve(packageManager)];
 
   if (packageManager === "npm") {
     parts.push("create vite@latest");
@@ -51,10 +53,11 @@ function createViteCommand(input: UserInput) {
 function createNextCommand(input: UserInput) {
   const { appName, packageManager, language } = input;
 
-  const parts: string[] = [packageManager];
+  // npx --yes is to automatically accept the prompt to install latest version
+  const parts: string[] = [resolvePacakgeManager(packageManager)];
 
   if (packageManager === "npm") {
-    parts.push("create-next-app");
+    parts.push("create-next-app@latest");
   } else {
     parts.push("create next-app");
   }
@@ -70,4 +73,10 @@ function createNextCommand(input: UserInput) {
   }
 
   return parts.join(" ");
+}
+
+// We use npx to install the latest version of scaffolding tools
+// The --yes is to automatically accept latest version prompt
+function resolvePacakgeManager(packageManager: PackageManager) {
+  return packageManager === "npm" ? "npx --yes" : packageManager;
 }
