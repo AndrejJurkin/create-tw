@@ -1,7 +1,8 @@
+import { logger } from "./../../utils/logger";
 import { PackageManager } from "./../../utils/getPackageManager";
 import { UserInput } from "../readInput.js";
-import { resolve } from "path";
-import execAsync from "../../utils/execAsync.js";
+import { spawn } from "child_process";
+import chalk from "chalk";
 
 /**
  * Create and execute the command to install the project.
@@ -10,7 +11,24 @@ import execAsync from "../../utils/execAsync.js";
  */
 export default async function createProject(input: UserInput) {
   const command = createInstallCommand(input);
-  await execAsync(command);
+
+  const child = spawn(command, {
+    stdio: "inherit",
+    shell: true,
+  });
+
+  await new Promise((resolve, reject) => {
+    child.on("error", reject);
+    child.on("close", (code) => {
+      resolve(code);
+    });
+  });
+
+  logger.log(
+    `${chalk.bold.green("✔")} Project created using ${chalk.green.bold(
+      getScaffoldingToolName(input),
+    )}\n`,
+  );
 }
 
 function createInstallCommand(input: UserInput) {
@@ -34,10 +52,31 @@ function createInstallCommand(input: UserInput) {
   }
 }
 
+function getScaffoldingToolName(input: UserInput) {
+  switch (input.appType) {
+    case "NextJS":
+      return "next-app";
+    case "Vite":
+    // Fall through
+    case "Vanilla":
+    // Fall through
+    case "React":
+    // Fall through
+    case "Vue":
+    // Fall thruogh
+    case "Preact":
+    // Fall through
+    case "Svelte":
+      return "vite";
+    default:
+      throw new Error(`Unknown app type: ${input.appType}`);
+  }
+}
+
 function createViteCommand(input: UserInput) {
   const { appName, packageManager, appId } = input;
 
-  const parts: string[] = [resolve(packageManager)];
+  const parts: string[] = [resolvePacakgeManager(packageManager)];
 
   if (packageManager === "npm") {
     parts.push("create vite@latest");

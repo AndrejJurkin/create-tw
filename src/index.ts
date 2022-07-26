@@ -5,7 +5,6 @@ import getPackageManager from "./utils/getPackageManager";
 import { logger } from "./utils/logger";
 import chalk from "chalk";
 import path from "path";
-import ora from "ora";
 import fs from "fs-extra";
 import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
@@ -21,11 +20,7 @@ async function main() {
 
   logger.info(`\nUsing: ${chalk.cyan.bold(pkgManager)}\n`);
 
-  // Copy the template to the project directory
-  const spinner = ora(`Scaffolding project in ${projectDir}`).start();
-
   if (fs.existsSync(projectDir)) {
-    spinner.stop();
     // Ask to overwrite
     const answer = await inquirer.prompt({
       name: "overwrite",
@@ -33,21 +28,14 @@ async function main() {
       message: `${chalk.yellow.bold(`Directory already exists. Overwrite?`)}`,
     });
     if (!answer.overwrite) {
-      spinner.stop();
       logger.error("Aborting...");
       process.exit(1);
     }
-    spinner.start();
 
     fs.removeSync(projectDir);
   }
 
   await createProject(input);
-
-  spinner.succeed(
-    `Finished scaffolding ${chalk.green.bold(input.appName)} project base.`,
-  );
-
   await installTailwind(input, projectDir);
   await installDependencies(input, projectDir);
 

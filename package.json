@@ -1,11 +1,11 @@
 {
   "name": "create-tw",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "TBD",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "TBD"
+    "url": "https://github.com/AndrejJurkin/create-tw"
   },
   "type": "module",
   "exports": "./dist/index.js",
@@ -26,7 +26,11 @@
   },
   "keywords": [
     "tailwindcss",
-    "nextjs"
+    "nextjs",
+    "scaffold",
+    "react",
+    "html",
+    "css"
   ],
   "author": "Andrej Jurkin",
   "license": "MIT",
