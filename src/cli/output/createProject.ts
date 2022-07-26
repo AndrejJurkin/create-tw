@@ -12,6 +12,8 @@ import chalk from "chalk";
 export default async function createProject(input: UserInput) {
   const command = createInstallCommand(input);
 
+  logger.info(`\nInstalling project using ${chalk.green(command)}\n`);
+
   const child = spawn(command, {
     stdio: "inherit",
     shell: true,
@@ -27,7 +29,7 @@ export default async function createProject(input: UserInput) {
   logger.log(
     `${chalk.bold.green("✔")} Project created using ${chalk.green.bold(
       getScaffoldingToolName(input),
-    )}\n`,
+    )}`,
   );
 }
 
@@ -79,7 +81,7 @@ function createViteCommand(input: UserInput) {
   const parts: string[] = [resolvePacakgeManager(packageManager)];
 
   if (packageManager === "npm") {
-    parts.push("create vite@latest");
+    parts.push("create-vite@latest");
   } else {
     parts.push("create vite");
   }

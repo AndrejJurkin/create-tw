@@ -18,6 +18,10 @@ export async function deleteFiles({ appId }: UserInput, projectDir: string) {
     case "nextjs-ts":
       await fs.remove(path.join(projectDir, "styles/Home.module.css"));
       break;
+    case "vanilla-ts":
+      await fs.remove(path.join(projectDir, "src/counter.ts"));
+      await fs.remove(path.join(projectDir, "src/typescript.svg"));
+      break;
     default:
       break;
   }

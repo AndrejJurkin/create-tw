@@ -1,3 +1,4 @@
+import { logger } from "./../utils/logger";
 import getPackageManager, {
   PackageManager,
 } from "./../utils/getPackageManager";
@@ -5,6 +6,7 @@ import inquirer from "inquirer";
 import { Command } from "commander";
 import { getVersion } from "../utils/getVersion";
 import validateAppName from "../utils/validateAppName.js";
+import chalk from "chalk";
 
 // TODO: Move to constants
 const APP_NAME = "create-tailwind-app";
@@ -30,11 +32,13 @@ export const supportedAppTypes = [
   // "Svelte",
 ];
 
+export const supportedAppIds = ["nextjs", "nextjs-ts", "vanilla", "vanilla-ts"];
+
 export type Dependencies = typeof supportedDependencies[number];
 export type Plugins = typeof supportedPlugins[number];
 export type AppType = typeof supportedAppTypes[number];
 export type Language = "TypeScript" | "JavaScript";
-export type AppId = "nextjs" | "nextjs-ts" | "vanilla" | "vanilla-ts";
+export type AppId = typeof supportedAppIds[number];
 
 export interface UserInput {
   appName: string;
@@ -48,9 +52,9 @@ export interface UserInput {
 }
 
 const defaults: UserInput = {
-  appName: "create-tailwind-app",
+  appName: "tailwind-app",
   appType: "nextjs",
-  appId: "next",
+  appId: "nextjs",
   options: {
     initGit: false,
     installDependencies: false,
@@ -70,18 +74,58 @@ export async function readInput() {
       "A CLI for quickly creating applications based on Tailwind CSS",
     )
     .argument("[app]", "The name of the application")
+    .option("--template <template>", "The template to use")
     .version(getVersion())
     .parse(process.argv);
 
-  console.log("Args: ", program.args);
-  console.log("Options: ", program.opts());
+  const template = program.opts().template;
+  const templateSupported = supportedAppIds.includes(template);
+
+  if (!templateSupported) {
+    logger.error(`Unknown template: ${template}\n`);
+    logger.info(
+      `Currently supported templates:\n${chalk.green(
+        supportedAppIds.join("\n"),
+      )}`,
+    );
+    logger.info(
+      `You can skip passing the template and select it interactively.\n`,
+    );
+
+    const answer = await inquirer.prompt({
+      name: "continue",
+      type: "confirm",
+      message: "Would you like to continue with interactive mode?",
+    });
+
+    if (!answer.continue) {
+      process.exit(1);
+    }
+  }
 
   input.appName = program.args[0] ?? (await readAppName());
-  input.language = await readLanguage();
-  input.appType = await readAppType(supportedAppTypes);
-  input.appId = `${input.appType.toLocaleLowerCase()}${
-    input.language === "TypeScript" ? "-ts" : ""
-  }` as AppId;
+  if (templateSupported) {
+    const parsedTemplate = template.split("-");
+
+    const appType = supportedAppTypes.find(
+      (t) => t.toLowerCase() === parsedTemplate[0],
+    );
+
+    if (!appType) {
+      throw new Error(`Unknown app type: ${parsedTemplate[0]}`);
+    }
+
+    input.appType = appType;
+    input.appId = template;
+    input.language = template.includes("ts") ? "TypeScript" : "JavaScript";
+  } else {
+    input.language = await readLanguage();
+    input.appType = await readAppType(supportedAppTypes);
+    input.appId = `${input.appType.toLocaleLowerCase()}${
+      input.language === "TypeScript" ? "-ts" : ""
+    }`;
+  }
+
   input.dependencies = await readDependencies(supportedDependencies);
   input.plugins = await readPlugins(supportedPlugins);
 
