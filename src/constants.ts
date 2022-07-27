@@ -1,7 +1,7 @@
 import path from "path";
 import { fileURLToPath } from "url";
 
-export const APP_NAME = "create-tailwind-app";
+export const APP_NAME = "create-tw";
 
 const __filename = fileURLToPath(import.meta.url);
 const distPath = path.dirname(__filename);
