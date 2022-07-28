@@ -2,7 +2,6 @@ import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
 import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
-import getFileName from "../../utils/getFileName.js";
 import addPluginsTransformer from "./addPluginsTransformer.js";
 import { UserInput } from "../config.js";
 
@@ -23,7 +22,7 @@ async function createTailwindConfig(input: UserInput) {
   const { appConfig, projectDir } = input;
   const { templateDir } = appConfig;
 
-  const fileName = getFileName("tailwind.config", input);
+  const fileName = getConfigFileName("tailwind.config", input);
   const tailwindConfig = path.join(templateDir, "tailwind.config.js");
   const spinner = ora(`Creating ${fileName}`).start();
 
@@ -44,7 +43,7 @@ async function createTailwindConfig(input: UserInput) {
 async function createPostCssConfig(input: UserInput) {
   const { appConfig, projectDir } = input;
   const { templateDir } = appConfig;
-  const fileName = getFileName("postcss.config", input);
+  const fileName = getConfigFileName("postcss.config", input);
   const postCssConfig = path.join(templateDir, "postcss.config.js");
   const spinner = ora(`Creating ${fileName}`).start();
 
@@ -74,4 +73,8 @@ async function deleteFiles(input: UserInput) {
 
   await input.appConfig.deleteFiles?.(input);
   spinner.succeed("Deleted unneeded files");
+}
+
+function getConfigFileName(fileName: string, input: UserInput) {
+  return `${fileName}${input.appConfig.twConfigExtension}`;
 }

@@ -1,6 +1,6 @@
 import { logger } from "./../utils/logger";
 import getPackageManager from "./../utils/getPackageManager";
-import { prompt } from "inquirer";
+import inquirer from "inquirer";
 import { Command } from "commander";
 import { getVersion } from "../utils/getVersion";
 import validateProjectName from "../utils/validateAppName.js";
@@ -43,7 +43,7 @@ export async function readInput() {
   const { template: templateId } = program.opts();
 
   // Get project name from the first argument or prompt for it
-  input.projectName = program.args[0] ?? (await readAppName());
+  input.projectName = program.args[0] ?? (await readProjectName());
 
   // If template id was provided in options, check if it is supported
   // If not, prompt for template id interactively
@@ -60,11 +60,14 @@ export async function readInput() {
     const tid = await readTemplateId(
       supportedTemplateIds.filter((id) => !id.includes("ts")),
     );
+    console.log("tid", tid);
     const language = await readLanguage();
-    const config = getConfig(`${tid}${language === "ts" && "-ts"}`);
+    const templateIdKey = `${tid}${language === "ts" ? "-ts" : ""}`;
+    console.log("templateIdKey", templateIdKey);
+    const config = getConfig(templateIdKey);
 
     if (!config) {
-      throw new Error(`Unknown template id: ${templateId}`);
+      throw new Error(`Unknown template id: ${templateIdKey}`);
     }
 
     input.appConfig = config;
@@ -74,27 +77,31 @@ export async function readInput() {
   input.plugins = await readPlugins();
   input.projectDir = path.resolve(process.cwd(), input.projectName);
 
+  console.log("User input", input);
+
   return input;
 }
 
-async function readAppName() {
-  const { projectName } = await prompt<Pick<UserInput, "projectName">>({
-    name: "appName",
-    type: "input",
-    message: "What will your project be called?",
-    default: DEFAULTS.projectName,
-    validate: validateProjectName,
-    transformer: (i: string) => {
-      return i.trim();
+async function readProjectName() {
+  const { projectName } = await inquirer.prompt<Pick<UserInput, "projectName">>(
+    {
+      name: "projectName",
+      type: "input",
+      message: "What will your project be called?",
+      default: DEFAULTS.projectName,
+      validate: validateProjectName,
+      transformer: (i: string) => {
+        return i.trim();
+      },
     },
-  });
+  );
 
   return projectName;
 }
 
 async function readTemplateId(types: TemplateId[]) {
-  const { templateName } = await prompt<{
-    templateName: string;
+  const { templateId } = await inquirer.prompt<{
+    templateId: string;
   }>({
     name: "templateId",
     type: "list",
@@ -106,11 +113,13 @@ async function readTemplateId(types: TemplateId[]) {
     default: "nextjs",
   });
 
-  return templateName;
+  return templateId;
 }
 
 async function readDependencies() {
-  const { dependencies } = await prompt<Pick<UserInput, "dependencies">>({
+  const { dependencies } = await inquirer.prompt<
+    Pick<UserInput, "dependencies">
+  >({
     name: "dependencies",
     type: "checkbox",
     message: "Which dependencies would you like to include?",
@@ -124,13 +133,13 @@ async function readDependencies() {
 }
 
 async function readLanguage() {
-  const { language } = await prompt<{ language: Language }>({
+  const { language } = await inquirer.prompt<{ language: Language }>({
     name: "language",
     type: "list",
     message: "What language will your project be written in?",
     choices: [
-      { name: "TypeScript", value: "TypeScript", short: "TypeScript" },
-      { name: "JavaScript", value: "JavaScript", short: "JavaScript" },
+      { name: "TypeScript", value: "ts", short: "ts" },
+      { name: "JavaScript", value: "js", short: "js" },
     ],
     default: "typescript",
   });
@@ -139,7 +148,7 @@ async function readLanguage() {
 }
 
 async function readPlugins() {
-  const { plugins } = await prompt<Pick<UserInput, "plugins">>({
+  const { plugins } = await inquirer.prompt<Pick<UserInput, "plugins">>({
     name: "plugins",
     type: "checkbox",
     message: "Which plugins would you like to include?",
@@ -173,7 +182,7 @@ async function checkTemplateSupport(templateId: string) {
       `You can skip passing the template and select it interactively.\n`,
     );
 
-    const answer = await prompt({
+    const answer = await inquirer.prompt({
       name: "continue",
       type: "confirm",
       message: "Would you like to continue with interactive mode?",

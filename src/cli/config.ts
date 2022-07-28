@@ -65,6 +65,7 @@ export interface AppConfig {
   language: Language;
   templateDir: string;
   scaffoldingTool: string;
+  twConfigExtension: string;
   copyTemplate: (userInput: UserInput) => Promise<void>;
   deleteFiles?: (userInput: UserInput) => Promise<void>;
   getCssOutputPath: (userInput: UserInput) => string;
@@ -77,6 +78,7 @@ export const NEXTJS_CONFIG: AppConfig = {
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/nextjs"),
   scaffoldingTool: "create-next-app",
+  twConfigExtension: ".js",
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(NEXTJS_CONFIG.templateDir, "index.js"),
@@ -98,6 +100,7 @@ export const NEXTJS_TS_CONFIG: AppConfig = {
   language: "ts",
   templateDir: path.join(PKG_ROOT, "templates/nextjs-ts"),
   scaffoldingTool: "create-next-app",
+  twConfigExtension: ".js",
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(NEXTJS_TS_CONFIG.templateDir, "index.tsx"),
@@ -119,6 +122,7 @@ export const VANILLA_CONFIG: AppConfig = {
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/vanilla"),
   scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(VANILLA_CONFIG.templateDir, "index.html"),
@@ -141,6 +145,7 @@ export const VANILLA_TS_CONFIG: AppConfig = {
   language: "ts",
   templateDir: path.join(PKG_ROOT, "templates/vanilla-ts"),
   scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(VANILLA_TS_CONFIG.templateDir, "index.html"),
