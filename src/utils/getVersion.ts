@@ -1,4 +1,5 @@
+import packageJson from "../../package.json";
+
 export function getVersion() {
-  // TODO: Get from package.json
-  return "0.0.0";
+  return packageJson.version;
 }

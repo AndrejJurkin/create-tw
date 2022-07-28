@@ -1,72 +1,34 @@
 import { logger } from "./../utils/logger";
-import getPackageManager, {
-  PackageManager,
-} from "./../utils/getPackageManager";
-import inquirer from "inquirer";
+import getPackageManager from "./../utils/getPackageManager";
+import { prompt } from "inquirer";
 import { Command } from "commander";
 import { getVersion } from "../utils/getVersion";
-import validateAppName from "../utils/validateAppName.js";
+import validateProjectName from "../utils/validateAppName.js";
 import chalk from "chalk";
+import { APP_NAME } from "../constants.js";
+import {
+  TemplateId,
+  supportedTemplateIds,
+  UserInput,
+  NEXTJS_CONFIG,
+  getConfig,
+  supportedDependencies,
+  supportedPlugins,
+  Language,
+} from "./config.js";
+import path from "path";
 
-// TODO: Move to constants
-const APP_NAME = "create-tailwind-app";
-
-interface Flags {
-  initGit: boolean;
-  installDependencies: boolean;
-}
-
-export const supportedDependencies = ["prettier", "clsx"];
-
-export const supportedPlugins = [
-  "@tailwindcss/typography",
-  "@tailwindcss/forms",
-  "@tailwindcss/aspect-ratio",
-];
-
-export const supportedAppTypes = [
-  "NextJS",
-  "Vanilla",
-  // "React",
-  // "Vue",
-  // "Svelte",
-];
-
-export const supportedAppIds = ["nextjs", "nextjs-ts", "vanilla", "vanilla-ts"];
-
-export type Dependencies = typeof supportedDependencies[number];
-export type Plugins = typeof supportedPlugins[number];
-export type AppType = typeof supportedAppTypes[number];
-export type Language = "TypeScript" | "JavaScript";
-export type AppId = typeof supportedAppIds[number];
-
-export interface UserInput {
-  appName: string;
-  appType: AppType;
-  appId: AppId;
-  options: Flags;
-  language: Language;
-  dependencies: Dependencies[];
-  plugins: Plugins[];
-  packageManager: PackageManager;
-}
-
-const defaults: UserInput = {
-  appName: "tailwind-app",
-  appType: "nextjs",
-  appId: "nextjs",
-  options: {
-    initGit: false,
-    installDependencies: false,
-  },
-  language: "TypeScript",
-  plugins: [] as Plugins[],
-  dependencies: [] as Dependencies[],
+const DEFAULTS: UserInput = {
+  projectName: "tailwind-app",
+  plugins: [],
+  dependencies: [],
   packageManager: getPackageManager(),
+  projectDir: "",
+  appConfig: NEXTJS_CONFIG,
 };
 
 export async function readInput() {
-  const input = { ...defaults };
+  const input = { ...DEFAULTS };
   const program = new Command().name(APP_NAME);
 
   program
@@ -74,104 +36,85 @@ export async function readInput() {
       "A CLI for quickly creating applications based on Tailwind CSS",
     )
     .argument("[app]", "The name of the application")
-    .option("--template <template>", "The template to use")
+    .option("--template <templateId>", "The template to use")
     .version(getVersion())
     .parse(process.argv);
 
-  const template = program.opts().template;
-  const templateSupported = supportedAppIds.includes(template);
+  const { template: templateId } = program.opts();
 
-  if (!templateSupported) {
-    logger.error(`Unknown template: ${template}\n`);
-    logger.info(
-      `Currently supported templates:\n${chalk.green(
-        supportedAppIds.join("\n"),
-      )}`,
-    );
-    logger.info(
-      `You can skip passing the template and select it interactively.\n`,
-    );
+  // Get project name from the first argument or prompt for it
+  input.projectName = program.args[0] ?? (await readAppName());
 
-    const answer = await inquirer.prompt({
-      name: "continue",
-      type: "confirm",
-      message: "Would you like to continue with interactive mode?",
-    });
+  // If template id was provided in options, check if it is supported
+  // If not, prompt for template id interactively
+  if (await checkTemplateSupport(templateId)) {
+    const config = getConfig(templateId);
 
-    if (!answer.continue) {
-      process.exit(1);
-    }
-  }
-
-  input.appName = program.args[0] ?? (await readAppName());
-  if (templateSupported) {
-    const parsedTemplate = template.split("-");
-
-    const appType = supportedAppTypes.find(
-      (t) => t.toLowerCase() === parsedTemplate[0],
-    );
-
-    if (!appType) {
-      throw new Error(`Unknown app type: ${parsedTemplate[0]}`);
+    if (!config) {
+      throw new Error(`Unknown template id: ${templateId}`);
     }
 
-    input.appType = appType;
-    input.appId = template;
-    input.language = template.includes("ts") ? "TypeScript" : "JavaScript";
+    input.appConfig = config;
   } else {
-    input.language = await readLanguage();
-    input.appType = await readAppType(supportedAppTypes);
-    input.appId = `${input.appType.toLocaleLowerCase()}${
-      input.language === "TypeScript" ? "-ts" : ""
-    }`;
+    // We filter out the TS templates, since we select the language in the next step
+    const tid = await readTemplateId(
+      supportedTemplateIds.filter((id) => !id.includes("ts")),
+    );
+    const language = await readLanguage();
+    const config = getConfig(`${tid}${language === "ts" && "-ts"}`);
+
+    if (!config) {
+      throw new Error(`Unknown template id: ${templateId}`);
+    }
+
+    input.appConfig = config;
   }
 
-  input.dependencies = await readDependencies(supportedDependencies);
-  input.plugins = await readPlugins(supportedPlugins);
+  input.dependencies = await readDependencies();
+  input.plugins = await readPlugins();
+  input.projectDir = path.resolve(process.cwd(), input.projectName);
 
   return input;
 }
 
 async function readAppName() {
-  const { appName } = await inquirer.prompt<Pick<UserInput, "appName">>({
+  const { projectName } = await prompt<Pick<UserInput, "projectName">>({
     name: "appName",
     type: "input",
     message: "What will your project be called?",
-    default: defaults.appName,
-    validate: validateAppName,
+    default: DEFAULTS.projectName,
+    validate: validateProjectName,
     transformer: (i: string) => {
       return i.trim();
     },
   });
 
-  return appName;
+  return projectName;
 }
 
-async function readAppType(types: AppType[]) {
-  const { appType } = await inquirer.prompt<{
-    appType: AppType;
+async function readTemplateId(types: TemplateId[]) {
+  const { templateName } = await prompt<{
+    templateName: string;
   }>({
-    name: "appType",
+    name: "templateId",
     type: "list",
     message: "What type of application will you be creating?",
     choices: types.map((t) => ({
-      name: t,
+      name: getConfig(t)?.displayName,
       value: t,
     })),
-    default: "typescript",
+    default: "nextjs",
   });
 
-  return appType;
+  return templateName;
 }
 
-async function readDependencies(choices: string[]) {
-  const { dependencies } = await inquirer.prompt<
-    Pick<UserInput, "dependencies">
-  >({
+async function readDependencies() {
+  const { dependencies } = await prompt<Pick<UserInput, "dependencies">>({
     name: "dependencies",
     type: "checkbox",
     message: "Which dependencies would you like to include?",
-    choices: choices.map((dependency) => ({
+    choices: supportedDependencies.map((dependency) => ({
       name: dependency,
       checked: false,
     })),
@@ -181,7 +124,7 @@ async function readDependencies(choices: string[]) {
 }
 
 async function readLanguage() {
-  const { language } = await inquirer.prompt<{ language: Language }>({
+  const { language } = await prompt<{ language: Language }>({
     name: "language",
     type: "list",
     message: "What language will your project be written in?",
@@ -195,16 +138,51 @@ async function readLanguage() {
   return language;
 }
 
-async function readPlugins(choices: string[]) {
-  const { plugins } = await inquirer.prompt<Pick<UserInput, "plugins">>({
+async function readPlugins() {
+  const { plugins } = await prompt<Pick<UserInput, "plugins">>({
     name: "plugins",
     type: "checkbox",
     message: "Which plugins would you like to include?",
-    choices: choices.map((dependency) => ({
+    choices: supportedPlugins.map((dependency) => ({
       name: dependency,
       checked: false,
     })),
   });
 
   return plugins;
+}
+
+/**
+ * Check if the template provided in options is supported
+ * @param templateId the id of the template to check i.e. "nextjs", "vanilla-ts", etc.
+ * @returns true if the template is supported, false otherwise
+ */
+async function checkTemplateSupport(templateId: string) {
+  const templateSupported = supportedTemplateIds.includes(
+    templateId as TemplateId,
+  );
+
+  if (templateId && !templateSupported) {
+    logger.error(`Unknown template: ${templateId}\n`);
+    logger.info(
+      `Currently supported templates:\n${chalk.green(
+        supportedTemplateIds.join("\n"),
+      )}`,
+    );
+    logger.info(
+      `You can skip passing the template and select it interactively.\n`,
+    );
+
+    const answer = await prompt({
+      name: "continue",
+      type: "confirm",
+      message: "Would you like to continue with interactive mode?",
+    });
+
+    if (!answer.continue) {
+      process.exit(1);
+    }
+  }
+
+  return templateSupported;
 }

@@ -4,7 +4,6 @@ import { readInput } from "./cli/readInput";
 import getPackageManager from "./utils/getPackageManager";
 import { logger } from "./utils/logger";
 import chalk from "chalk";
-import path from "path";
 import fs from "fs-extra";
 import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
@@ -15,8 +14,8 @@ async function main() {
   logger.success("The easiest way to create a Tailwind project\n");
 
   const input = await readInput();
+  const { projectDir, projectName } = input;
   const pkgManager = getPackageManager();
-  const projectDir = path.resolve(process.cwd(), input.appName);
 
   logger.info(`\nUsing: ${chalk.cyan.bold(pkgManager)}\n`);
 
@@ -27,6 +26,7 @@ async function main() {
       type: "confirm",
       message: `${chalk.yellow.bold(`Directory already exists. Overwrite?`)}`,
     });
+
     if (!answer.overwrite) {
       logger.error("Aborting...");
       process.exit(1);
@@ -36,11 +36,11 @@ async function main() {
   }
 
   await createProject(input);
-  await installTailwind(input, projectDir);
-  await installDependencies(input, projectDir);
+  await installTailwind(input);
+  await installDependencies(input);
 
   logger.info(`\nProject created in ${chalk.green.bold(projectDir)}\n`);
-  logger.info(`${chalk.cyan.bold(`cd ${input.appName}`)}`);
+  logger.info(`${chalk.cyan.bold(`cd ${projectName}`)}`);
   logger.info(
     `${chalk.cyan.bold(
       `${getPackageManager()} ${
