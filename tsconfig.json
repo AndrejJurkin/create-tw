@@ -13,7 +13,7 @@
     "declarationMap": true,
     "sourceMap": true,
     "removeComments": true,
-
+    "checkJs": false,
     "strict": true,
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,

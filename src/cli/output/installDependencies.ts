@@ -1,10 +1,10 @@
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
-import { UserInput } from "../readInput.js";
 import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
+import { UserInput } from "../config.js";
 
 /**
  * Install dependencies for the project.
@@ -12,11 +12,8 @@ import installPackages from "../../utils/installPackages.js";
  * @param input CLI input
  * @param projectDir Path to the project directory
  */
-export default async function installDependencies(
-  input: UserInput,
-  projectDir: string,
-) {
-  const { plugins } = input;
+export default async function installDependencies(input: UserInput) {
+  const { plugins, projectDir } = input;
 
   const devDependencies = input.dependencies.filter(
     (d) => dependenciesMap[d] === "dev",
