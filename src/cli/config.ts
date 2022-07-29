@@ -81,7 +81,7 @@ export const NEXTJS_CONFIG: AppConfig = {
   twConfigExtension: ".js",
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
-      path.join(NEXTJS_CONFIG.templateDir, "index.js"),
+      path.join(NEXTJS_CONFIG.templateDir, "index.jsx"),
       path.join(projectDir, "pages", "index.js"),
     );
   },

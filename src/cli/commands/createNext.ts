@@ -13,7 +13,7 @@ export function createNextCommand(input: UserInput) {
     parts.push("create next-app");
   }
 
-  parts.push(appConfig.displayName);
+  parts.push(input.projectName);
 
   if (appConfig.language === "ts") {
     if (packageManager === "npm" || packageManager === "pnpm") {

@@ -54,6 +54,6 @@ async function main() {
 }
 
 main().catch((e) => {
-  logger.error(e);
+  logger.error(`\n${e}\n`);
   process.exit(1);
 });
