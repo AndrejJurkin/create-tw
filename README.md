@@ -21,6 +21,8 @@ yarn create tw
 |nextjs-ts | Next.js TS | create-next-app |
 |vanilla   | Vanilla    | create-vite     |
 |vanilla-ts| Vanilla TS | create-vite     |
+|react     | React      | create-vite     |
+|react-ts  | React   TS | create-vite     |
 
 You can include template id to skip input steps
 
