@@ -7,10 +7,21 @@ This CLI is very very early in development. In the following days I'm planning t
 
 It uses popular scaffolding scripts like `create-next-app` or `create-vite` to scaffold projects and then configures TailwindCSS to work with your project out of the box.
 
+#### npx
 ```bash
 npx create-tw@latest
+
 # OR
+
+npx create-tw@latest <project-name> --template <id>
+```
+#### yarn
+```bash
 yarn create tw
+
+# OR
+
+yearn create tw <project-name> --template <id> 
 ```
 
 ### Scaffolding tools
