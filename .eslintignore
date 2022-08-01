@@ -1,7 +1,10 @@
 node_modules/
 build/
 dist/
-templates/
-/vanilla
-/vanilla-ts
-/nextjs
+/templates/
+vanilla/
+vanilla-ts/
+nextjs/
+nextjs-ts/
+react/
+react-ts/

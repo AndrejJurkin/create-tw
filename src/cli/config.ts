@@ -27,6 +27,8 @@ export const supportedTemplateIds = [
   "nextjs-ts",
   "vanilla",
   "vanilla-ts",
+  "react",
+  "react-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -166,11 +168,57 @@ export const VANILLA_TS_CONFIG: AppConfig = {
   createInstallCommand: createViteCommand,
 };
 
+export const REACT_CONFIG: AppConfig = {
+  templateId: "react",
+  displayName: "React (Vite)",
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/react"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(REACT_CONFIG.templateDir, "App.jsx"),
+      path.join(projectDir, "src/App.jsx"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/index.css");
+  },
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "src/app.css"));
+  },
+  createInstallCommand: createViteCommand,
+};
+
+export const REACT_TS_CONFIG: AppConfig = {
+  templateId: "react-ts",
+  displayName: "React TypeScript (Vite)",
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/react-ts"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(REACT_TS_CONFIG.templateDir, "App.tsx"),
+      path.join(projectDir, "src/App.tsx"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/index.css");
+  },
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "src/app.css"));
+  },
+  createInstallCommand: createViteCommand,
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
   vanilla: VANILLA_CONFIG,
   "vanilla-ts": VANILLA_TS_CONFIG,
+  react: REACT_CONFIG,
+  "react-ts": REACT_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
