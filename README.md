@@ -1,11 +1,14 @@
 # Create TailwindCSS Project (create-tw)
 
-### Currently in very early stage of development
-This CLI is very very early in development. In the following days I'm planning to add support for React, Vue & Svelte with Vite. Ideas, suggestions and bug reports are much appreciated.
-
 ### The easiest way to get started with TailwindCSS.
 
 It uses popular scaffolding scripts like `create-next-app` or `create-vite` to scaffold projects and then configures TailwindCSS to work with your project out of the box.
+
+### Currently in very early stage of development
+This CLI is very early in development. Ideas, suggestions and bug reports are much appreciated.
+In the following days I'm planning to add support for React, Vue & Svelte with Vite. 
+
+
 
 #### npx
 ```bash
