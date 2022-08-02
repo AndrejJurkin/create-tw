@@ -8,9 +8,17 @@ import fs from "fs-extra";
 import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
 import createProject from "./cli/output/createProject.js";
+import figlet from "figlet";
 
 async function main() {
-  logger.info("Welcome to create-tw!\n");
+  logger.info("\n");
+  logger.higlight(
+    figlet.textSync("create tw ", {
+      font: "Mini",
+    }),
+  );
+
+  logger.info(`\n${chalk.bold("Welcome to create-tw!")}`);
   logger.success("The easiest way to create a Tailwind project\n");
 
   const input = await readInput();
