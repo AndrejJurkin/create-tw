@@ -1,6 +1,6 @@
 {
   "name": "create-tw",
-  "version": "0.0.14",
+  "version": "0.0.15",
   "description": "CLI tool to create TailwindCSS projects using already existing scaffolding tools like create-next or create-vite",
   "main": "index.js",
   "repository": {
