@@ -1,3 +1,4 @@
+import chalk from "chalk";
 import { PKG_ROOT } from "./../constants";
 import fs from "fs-extra";
 import path from "path";
@@ -29,6 +30,8 @@ export const supportedTemplateIds = [
   "vanilla-ts",
   "react",
   "react-ts",
+  "vue",
+  "vue-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -76,7 +79,7 @@ export interface AppConfig {
 
 export const NEXTJS_CONFIG: AppConfig = {
   templateId: "nextjs",
-  displayName: "Next.js",
+  displayName: `Next.js ${chalk.dim("(create-next-app)")}`,
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/nextjs"),
   scaffoldingTool: "create-next-app",
@@ -98,7 +101,7 @@ export const NEXTJS_CONFIG: AppConfig = {
 
 export const NEXTJS_TS_CONFIG: AppConfig = {
   templateId: "nextjs-ts",
-  displayName: "Next.js (TypeScript)",
+  displayName: `${chalk.bold("Next.js TS")} ${chalk.dim("(create-next-app)")}`,
   language: "ts",
   templateDir: path.join(PKG_ROOT, "templates/nextjs-ts"),
   scaffoldingTool: "create-next-app",
@@ -120,7 +123,7 @@ export const NEXTJS_TS_CONFIG: AppConfig = {
 
 export const VANILLA_CONFIG: AppConfig = {
   templateId: "vanilla",
-  displayName: "Vanilla",
+  displayName: `Vanilla ${chalk.dim("(create-vite)")}`,
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/vanilla"),
   scaffoldingTool: "create-vite",
@@ -143,7 +146,7 @@ export const VANILLA_CONFIG: AppConfig = {
 
 export const VANILLA_TS_CONFIG: AppConfig = {
   templateId: "vanilla-ts",
-  displayName: "Vanilla (TypeScript)",
+  displayName: `Vanilla ${chalk.dim("(TypeScirpt, create-vite)")}`,
   language: "ts",
   templateDir: path.join(PKG_ROOT, "templates/vanilla-ts"),
   scaffoldingTool: "create-vite",
@@ -170,7 +173,7 @@ export const VANILLA_TS_CONFIG: AppConfig = {
 
 export const REACT_CONFIG: AppConfig = {
   templateId: "react",
-  displayName: "React (Vite)",
+  displayName: `React ${chalk.dim("(create-vite)")}`,
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/react"),
   scaffoldingTool: "create-vite",
@@ -192,7 +195,7 @@ export const REACT_CONFIG: AppConfig = {
 
 export const REACT_TS_CONFIG: AppConfig = {
   templateId: "react-ts",
-  displayName: "React TypeScript (Vite)",
+  displayName: `React ${chalk.dim("(TypeScript, create-vite)")}`,
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/react-ts"),
   scaffoldingTool: "create-vite",
@@ -212,6 +215,50 @@ export const REACT_TS_CONFIG: AppConfig = {
   createInstallCommand: createViteCommand,
 };
 
+export const VUE_CONFIG: AppConfig = {
+  templateId: "vue",
+  displayName: `Vue ${chalk.dim("(create-vite)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/vue"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(VUE_CONFIG.templateDir, "App.vue"),
+      path.join(projectDir, "src/App.vue"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/style.css");
+  },
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "src/components"));
+  },
+  createInstallCommand: createViteCommand,
+};
+
+export const VUE_TS_CONFIG: AppConfig = {
+  templateId: "vue-ts",
+  displayName: `Vue ${chalk.dim("(TypeScript, create-vite)")}`,
+  language: "ts",
+  templateDir: path.join(PKG_ROOT, "templates/vue-ts"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(VUE_CONFIG.templateDir, "App.vue"),
+      path.join(projectDir, "src/App.vue"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/style.css");
+  },
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "src/components"));
+  },
+  createInstallCommand: createViteCommand,
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
@@ -219,6 +266,8 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "vanilla-ts": VANILLA_TS_CONFIG,
   react: REACT_CONFIG,
   "react-ts": REACT_TS_CONFIG,
+  vue: VUE_CONFIG,
+  "vue-ts": VUE_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
