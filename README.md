@@ -5,10 +5,10 @@
 It uses popular scaffolding scripts like `create-next-app` or `create-vite` to scaffold projects and then configures TailwindCSS to work with your project out of the box.
 
 ### Currently in very early stage of development
-This CLI is very early in development. Ideas, suggestions and bug reports are much appreciated.
+Ideas, suggestions and bug reports are much appreciated.
 In the following days I'm planning to add support for React, Vue & Svelte with Vite. 
 
-
+![image](https://user-images.githubusercontent.com/6149523/182378126-c1ed463d-3a6b-4055-9eed-e3d83cd88dd9.png)
 
 #### npx
 ```bash
@@ -37,6 +37,8 @@ yearn create tw <project-name> --template <id>
 |vanilla-ts| Vanilla TS | create-vite     |
 |react     | React      | create-vite     |
 |react-ts  | React   TS | create-vite     |
+|vue       | Vue        | create-vite     |
+|vue-ts    | Vue     TS | create-vite     |
 
 You can include template id to skip input steps
 
