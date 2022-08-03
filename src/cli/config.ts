@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import chalk from "chalk";
 import { PKG_ROOT } from "./../constants";
 import fs from "fs-extra";
@@ -5,6 +6,7 @@ import path from "path";
 import { PackageManager } from "../utils/getPackageManager.js";
 import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
+import { createAstroCommand } from "./commands/createAstro.js";
 
 /**
  * The extra dependencies that we allow to select from when creating a new application.
@@ -32,6 +34,8 @@ export const supportedTemplateIds = [
   "react-ts",
   "vue",
   "vue-ts",
+  "astro",
+  "astro-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -71,6 +75,7 @@ export interface AppConfig {
   templateDir: string;
   scaffoldingTool: string;
   twConfigExtension: string;
+  skipTailwindInstall?: boolean;
   copyTemplate: (userInput: UserInput) => Promise<void>;
   deleteFiles?: (userInput: UserInput) => Promise<void>;
   getCssOutputPath: (userInput: UserInput) => string;
@@ -259,6 +264,24 @@ export const VUE_TS_CONFIG: AppConfig = {
   createInstallCommand: createViteCommand,
 };
 
+export const ASTRO_CONFIG: AppConfig = {
+  templateId: "astro",
+  displayName: `Astro ${chalk.dim("(create-astro)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/astro"),
+  scaffoldingTool: "create-astro",
+  twConfigExtension: ".cjs",
+  skipTailwindInstall: true,
+  copyTemplate: async () => {},
+  getCssOutputPath: () => "",
+  createInstallCommand: createAstroCommand,
+  deleteFiles: async () => {},
+};
+
+export const ASTRO_TS_CONFIG: AppConfig = {
+  ...ASTRO_CONFIG,
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
@@ -268,6 +291,8 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "react-ts": REACT_TS_CONFIG,
   vue: VUE_CONFIG,
   "vue-ts": VUE_TS_CONFIG,
+  astro: ASTRO_CONFIG,
+  "astro-ts": ASTRO_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];

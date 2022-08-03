@@ -11,6 +11,10 @@ import { UserInput } from "../config.js";
  * @param input CLI input
  */
 export default async function installTailwind(input: UserInput) {
+  if (input.appConfig.skipTailwindInstall) {
+    return;
+  }
+
   await createTailwindConfig(input);
   await createPostCssConfig(input);
   await copyTailwindDirectives(input);
