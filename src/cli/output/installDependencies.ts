@@ -21,11 +21,13 @@ export default async function installDependencies(input: UserInput) {
   const dependencies = input.dependencies.filter(
     (d) => dependenciesMap[d] === "dependencies",
   );
+  const twDependencies = input.appConfig.twDependencies ?? [];
 
   const devPackages = [
     "tailwindcss",
     "postcss",
     "autoprefixer",
+    ...twDependencies,
     ...plugins,
     ...devDependencies,
   ];
@@ -59,5 +61,6 @@ export default async function installDependencies(input: UserInput) {
 
 const dependenciesMap: Record<string, "dev" | "dependencies"> = {
   prettier: "dev",
+  "svelte-preprocess": "dev",
   clsx: "dependencies",
 };

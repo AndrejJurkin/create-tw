@@ -37,6 +37,7 @@
   "dependencies": {
     "chalk": "5.0.1",
     "commander": "^9.3.0",
+    "create-svelte": "^2.0.0-next.152",
     "figlet": "^1.5.2",
     "fs-extra": "^10.1.0",
     "gradient-string": "^2.0.1",

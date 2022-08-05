@@ -7,6 +7,7 @@ import { PackageManager } from "../utils/getPackageManager.js";
 import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
+import createSvelteCommand from "./commands/createSvelte.js";
 
 /**
  * The extra dependencies that we allow to select from when creating a new application.
@@ -36,6 +37,8 @@ export const supportedTemplateIds = [
   "vue-ts",
   "astro",
   "astro-ts",
+  "svelte-kit",
+  "svelte-kit-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -75,11 +78,12 @@ export interface AppConfig {
   templateDir: string;
   scaffoldingTool: string;
   twConfigExtension: string;
+  twDependencies?: string[];
   skipTailwindInstall?: boolean;
   copyTemplate: (userInput: UserInput) => Promise<void>;
   deleteFiles?: (userInput: UserInput) => Promise<void>;
   getCssOutputPath: (userInput: UserInput) => string;
-  createInstallCommand: (userInput: UserInput) => string;
+  createInstallCommand: (userInput: UserInput) => string | Promise<void>;
 }
 
 export const NEXTJS_CONFIG: AppConfig = {
@@ -282,6 +286,39 @@ export const ASTRO_TS_CONFIG: AppConfig = {
   ...ASTRO_CONFIG,
 };
 
+export const SVELTE_KIT_CONFIG: AppConfig = {
+  templateId: "svelte-kit",
+  displayName: `Svelte Kit ${chalk.dim("(create-svelte)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/svelte-kit"),
+  scaffoldingTool: "create-svelte",
+  twConfigExtension: ".cjs",
+  twDependencies: ["svelte-preprocess"],
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(SVELTE_KIT_CONFIG.templateDir, "__layout.svelte"),
+      path.join(projectDir, "src/routes/__layout.svelte"),
+    );
+    await fs.copy(
+      path.join(SVELTE_KIT_CONFIG.templateDir, "index.svelte"),
+      path.join(projectDir, "src/routes/index.svelte"),
+    );
+    await fs.copy(
+      path.join(SVELTE_KIT_CONFIG.templateDir, "svelte.config.js"),
+      path.join(projectDir, "svelte.config.js"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/style.css");
+  },
+  createInstallCommand: createSvelteCommand,
+  deleteFiles: async () => {},
+};
+
+export const SVELTE_KIT_TS_CONFIG: AppConfig = {
+  ...SVELTE_KIT_CONFIG,
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
@@ -293,6 +330,8 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "vue-ts": VUE_TS_CONFIG,
   astro: ASTRO_CONFIG,
   "astro-ts": ASTRO_TS_CONFIG,
+  "svelte-kit": SVELTE_KIT_CONFIG,
+  "svelte-kit-ts": SVELTE_KIT_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];

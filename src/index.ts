@@ -7,8 +7,8 @@ import chalk from "chalk";
 import fs from "fs-extra";
 import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
-import createProject from "./cli/output/createProject.js";
 import figlet from "figlet";
+import createProject from "./cli/output/createProject.js";
 
 async function main() {
   logger.info("\n");

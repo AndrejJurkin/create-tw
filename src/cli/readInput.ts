@@ -77,8 +77,6 @@ export async function readInput() {
   input.plugins = await readPlugins();
   input.projectDir = path.resolve(process.cwd(), input.projectName);
 
-  console.log("User input", input);
-
   return input;
 }
 
@@ -87,7 +85,7 @@ async function readProjectName() {
     {
       name: "projectName",
       type: "input",
-      message: "What will your project be called?",
+      message: "Project name",
       default: DEFAULTS.projectName,
       validate: validateProjectName,
       transformer: (i: string) => {
@@ -105,7 +103,7 @@ async function readTemplateId(types: TemplateId[]) {
   }>({
     name: "templateId",
     type: "list",
-    message: "What type of application will you be creating?",
+    message: "App type",
     choices: types.map((t) => ({
       name: getConfig(t)?.displayName,
       value: t,
