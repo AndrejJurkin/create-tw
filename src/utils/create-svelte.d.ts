@@ -10,5 +10,5 @@ declare module "create-svelte" {
     playwright: boolean;
   }
 
-  export function create(cwd: unknown, option: Options): Promise<void>;
+  export function create(cwd: string, option: Options): Promise<void>;
 }
