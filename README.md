@@ -36,6 +36,7 @@ In the following days I'm planning to add support for React, Vue & Svelte with V
 |react     | React      | create-vite     |
 |vue       | Vue        | create-vite     |
 |astro     | Astro      | create-astro    |
+|svelte-kit| Svelte Kit | create-svelte   |
 
 NOTE: Add the `-ts` postfix to the ID to install with TypeScript
 
