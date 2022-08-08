@@ -10,6 +10,10 @@ import installDependencies from "./cli/output/installDependencies.js";
 import figlet from "figlet";
 import createProject from "./cli/output/createProject.js";
 
+process.once("SIGINT", () => {
+  process.exit(1);
+});
+
 async function main() {
   logger.info("\n");
   logger.higlight(
