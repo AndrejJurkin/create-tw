@@ -8,7 +8,6 @@ import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
 import createSvelteCommand from "./commands/createSvelte.js";
-import { createPreactCommand } from "./commands/createPreact.js";
 
 /**
  * The extra dependencies that we allow to select from when creating a new application.
