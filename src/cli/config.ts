@@ -342,7 +342,23 @@ export const PREACT_CONFIG: AppConfig = {
 };
 
 export const PREACT_TS_CONFIG: AppConfig = {
-  ...PREACT_CONFIG,
+  templateId: "preact-ts",
+  displayName: `Preact ${chalk.dim("(TypeScirpt, create-vite)")}`,
+  language: "ts",
+  templateDir: path.join(PKG_ROOT, "templates/preact-ts"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(PREACT_TS_CONFIG.templateDir, "index.js"),
+      path.join(projectDir, "src/app.tsx"),
+    );
+  },
+  deleteFiles: async () => {},
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src", "index.css");
+  },
+  createInstallCommand: createViteCommand,
 };
 
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
@@ -359,7 +375,7 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "svelte-kit": SVELTE_KIT_CONFIG,
   "svelte-kit-ts": SVELTE_KIT_TS_CONFIG,
   preact: PREACT_CONFIG,
-  "preact-ts": REACT_TS_CONFIG,
+  "preact-ts": PREACT_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
