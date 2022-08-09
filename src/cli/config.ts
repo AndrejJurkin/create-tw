@@ -324,21 +324,21 @@ export const SVELTE_KIT_TS_CONFIG: AppConfig = {
 
 export const PREACT_CONFIG: AppConfig = {
   templateId: "preact",
-  displayName: `Preact ${chalk.dim("(preact-cli)")}`,
+  displayName: `Preact ${chalk.dim("(create-vite)")}`,
   language: "js",
   templateDir: path.join(PKG_ROOT, "templates/preact"),
-  scaffoldingTool: "preact-cli",
-  twConfigExtension: ".js",
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(PREACT_CONFIG.templateDir, "index.js"),
-      path.join(projectDir, "src/routes/home/index.js"),
+      path.join(projectDir, "src/app.jsx"),
     );
   },
   getCssOutputPath: ({ projectDir }) => {
-    return path.join(projectDir, "src/style/index.css");
+    return path.join(projectDir, "src/index.css");
   },
-  createInstallCommand: createPreactCommand,
+  createInstallCommand: createViteCommand,
   deleteFiles: async () => {},
 };
 

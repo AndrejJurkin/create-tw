@@ -1,4 +1,4 @@
-export default function App() {
+export function App() {
   return (
     <header className="py-16 mt-14">
       <h1 className="text-5xl font-bold text-center mb-2">
