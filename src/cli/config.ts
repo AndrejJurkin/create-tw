@@ -8,6 +8,7 @@ import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
 import createSvelteCommand from "./commands/createSvelte.js";
+import { createPreactCommand } from "./commands/createPreact.js";
 
 /**
  * The extra dependencies that we allow to select from when creating a new application.
@@ -39,6 +40,8 @@ export const supportedTemplateIds = [
   "astro-ts",
   "svelte-kit",
   "svelte-kit-ts",
+  "preact",
+  "preact-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -319,6 +322,30 @@ export const SVELTE_KIT_TS_CONFIG: AppConfig = {
   ...SVELTE_KIT_CONFIG,
 };
 
+export const PREACT_CONFIG: AppConfig = {
+  templateId: "preact",
+  displayName: `Preact ${chalk.dim("(preact-cli)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/preact"),
+  scaffoldingTool: "preact-cli",
+  twConfigExtension: ".js",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(PREACT_CONFIG.templateDir, "index.js"),
+      path.join(projectDir, "src/routes/home/index.js"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/style/index.css");
+  },
+  createInstallCommand: createPreactCommand,
+  deleteFiles: async () => {},
+};
+
+export const PREACT_TS_CONFIG: AppConfig = {
+  ...PREACT_CONFIG,
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
@@ -332,6 +359,8 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "astro-ts": ASTRO_TS_CONFIG,
   "svelte-kit": SVELTE_KIT_CONFIG,
   "svelte-kit-ts": SVELTE_KIT_TS_CONFIG,
+  preact: PREACT_CONFIG,
+  "preact-ts": REACT_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
