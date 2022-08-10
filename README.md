@@ -1,4 +1,4 @@
-![session](https://user-images.githubusercontent.com/6149523/183828677-1fc7e0ad-6588-4fad-a84d-4b6b5ef20f63.svg)
+<img width="1232" alt="image" src="https://user-images.githubusercontent.com/6149523/183829179-d46d555e-d4a0-4dec-9032-be30cc765038.png">
 
 # Create TailwindCSS Project (create-tw)
 ### The easiest way to get started with TailwindCSS.
