@@ -39,6 +39,8 @@ export const supportedTemplateIds = [
   "astro-ts",
   "svelte-kit",
   "svelte-kit-ts",
+  "preact",
+  "preact-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -319,6 +321,46 @@ export const SVELTE_KIT_TS_CONFIG: AppConfig = {
   ...SVELTE_KIT_CONFIG,
 };
 
+export const PREACT_CONFIG: AppConfig = {
+  templateId: "preact",
+  displayName: `Preact ${chalk.dim("(create-vite)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/preact"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(PREACT_CONFIG.templateDir, "index.js"),
+      path.join(projectDir, "src/app.jsx"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src/index.css");
+  },
+  createInstallCommand: createViteCommand,
+  deleteFiles: async () => {},
+};
+
+export const PREACT_TS_CONFIG: AppConfig = {
+  templateId: "preact-ts",
+  displayName: `Preact ${chalk.dim("(TypeScirpt, create-vite)")}`,
+  language: "ts",
+  templateDir: path.join(PKG_ROOT, "templates/preact-ts"),
+  scaffoldingTool: "create-vite",
+  twConfigExtension: ".cjs",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(PREACT_TS_CONFIG.templateDir, "index.js"),
+      path.join(projectDir, "src/app.tsx"),
+    );
+  },
+  deleteFiles: async () => {},
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src", "index.css");
+  },
+  createInstallCommand: createViteCommand,
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
@@ -332,6 +374,8 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "astro-ts": ASTRO_TS_CONFIG,
   "svelte-kit": SVELTE_KIT_CONFIG,
   "svelte-kit-ts": SVELTE_KIT_TS_CONFIG,
+  preact: PREACT_CONFIG,
+  "preact-ts": PREACT_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
