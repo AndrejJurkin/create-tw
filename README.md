@@ -1,6 +1,6 @@
 <img width="1232" alt="image" src="https://user-images.githubusercontent.com/6149523/183829179-d46d555e-d4a0-4dec-9032-be30cc765038.png">
 
-# Create TailwindCSS Project (create-tw)
+# Create Tailwind (create-tw)
 ### The easiest way to get started with TailwindCSS.
 It uses popular scaffolding scripts like `create-next-app` or `create-vite` to scaffold projects and then configures TailwindCSS to work with your project out of the box.
 
@@ -37,6 +37,7 @@ In the following days I'm planning to add support for React, Vue & Svelte with V
 |vue       | Vue        | create-vite     |
 |astro     | Astro      | create-astro    |
 |svelte-kit| Svelte Kit | create-svelte   |
+|preact    | Preact     | create-vite     |
 
 NOTE: Add the `-ts` postfix to the ID to install with TypeScript
 
