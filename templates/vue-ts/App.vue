@@ -16,7 +16,7 @@ onMounted(() => {
 <template>
   <div class="bg-gray-800 h-screen text-white">
     <header class="py-16">
-      <h1 class="text-5xl font-bold text-center mb-6">Create Tailwind App</h1>
+      <h1 class="text-5xl font-bold text-center mb-6">Create Tailwind</h1>
       <p className="text-center mb-6 text-xl">
         Please support this project by starring the repository on GitHub.
       </p>

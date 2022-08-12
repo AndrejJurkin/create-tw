@@ -12,7 +12,7 @@ export default function Home() {
       <div className="h-screen bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col text-white">
         <header className="py-16">
           <h1 className="text-5xl font-bold text-center mb-6">
-            Create Tailwind App
+            Create Tailwind
           </h1>
           <div className="flex flex-row justify-center items-center gap-4">
             <a
@@ -60,7 +60,7 @@ export default function Home() {
         <footer className="px-8 py-12 border-t border-gray-800">
           <div className="px-8 font-medium text-center">
             <a href="https://github.com/andrejjurkin/create-tailwind-app">
-              Create Tailwind App
+              Create Tailwind
             </a>
           </div>
         </footer>
