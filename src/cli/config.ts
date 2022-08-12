@@ -338,7 +338,9 @@ export const PREACT_CONFIG: AppConfig = {
     return path.join(projectDir, "src/index.css");
   },
   createInstallCommand: createViteCommand,
-  deleteFiles: async () => {},
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "src/app.css"));
+  },
 };
 
 export const PREACT_TS_CONFIG: AppConfig = {
@@ -354,7 +356,9 @@ export const PREACT_TS_CONFIG: AppConfig = {
       path.join(projectDir, "src/app.tsx"),
     );
   },
-  deleteFiles: async () => {},
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "src/app.css"));
+  },
   getCssOutputPath: ({ projectDir }) => {
     return path.join(projectDir, "src", "index.css");
   },

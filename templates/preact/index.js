@@ -1,15 +1,13 @@
 export function App() {
   return (
-    <header className="py-16 mt-14">
-      <h1 className="text-5xl font-bold text-center mb-2">
-        Create Tailwind App
-      </h1>
+    <header className="h-screen bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col text-white p-20">
+      <h1 className="text-5xl font-bold text-center mb-2">Create Tailwind</h1>
       <p className="text-center mb-6 text-xl">
-        Please support this project by starring the repository on GitHub.
+        Please support this project by starring the repository on GitHub!
       </p>
       <div className="flex flex-row justify-center items-center gap-4">
         <a
-          className="github-button"
+          className="github-button text-indigo-300 font-bold"
           href="https://github.com/andrejjurkin/create-tailwind-app"
           data-color-scheme="no-preference: dark; light: dark; dark: dark;"
           data-icon="octicon-star"
@@ -20,7 +18,7 @@ export function App() {
           Star
         </a>
         <a
-          className="github-button"
+          className="github-button text-indigo-300 font-bold"
           href="https://github.com/andrejjurkin/create-tailwind-app/discussions"
           data-color-scheme="no-preference: dark; light: dark; dark: dark;"
           data-icon="octicon-comment-discussion"
