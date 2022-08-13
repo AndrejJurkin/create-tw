@@ -108,6 +108,7 @@ async function readTemplateId(types: TemplateId[]) {
       name: getConfig(t)?.displayName,
       value: t,
     })),
+    pageSize: types.length,
     default: "nextjs",
   });
 

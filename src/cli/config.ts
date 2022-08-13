@@ -8,6 +8,7 @@ import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
 import createSvelteCommand from "./commands/createSvelte.js";
+import createSolidCommand from "./commands/createSolid.js";
 
 /**
  * The extra dependencies that we allow to select from when creating a new application.
@@ -41,6 +42,8 @@ export const supportedTemplateIds = [
   "svelte-kit-ts",
   "preact",
   "preact-ts",
+  "solid",
+  "solid-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -365,6 +368,42 @@ export const PREACT_TS_CONFIG: AppConfig = {
   createInstallCommand: createViteCommand,
 };
 
+export const SOLID_CONFIG: AppConfig = {
+  templateId: "solid",
+  displayName: `Solid ${chalk.dim("(degit solidjs/templates/js)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/solid"),
+  scaffoldingTool: "degit",
+  twConfigExtension: ".cjs",
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "pnpm-lock.yaml"));
+  },
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(SOLID_CONFIG.templateDir, "App.jsx"),
+      path.join(projectDir, "src/App.jsx"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "src", "index.css");
+  },
+  createInstallCommand: createSolidCommand,
+};
+
+export const SOLID_TS_CONFIG: AppConfig = {
+  ...SOLID_CONFIG,
+  templateId: "solid-ts",
+  displayName: `Solid ${chalk.dim("(degit solidjs/templates/ts)")}`,
+  language: "ts",
+  templateDir: path.join(PKG_ROOT, "templates/solid-ts"),
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(SOLID_TS_CONFIG.templateDir, "App.tsx"),
+      path.join(projectDir, "src/App.tsx"),
+    );
+  },
+};
+
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
@@ -380,6 +419,8 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
   "svelte-kit-ts": SVELTE_KIT_TS_CONFIG,
   preact: PREACT_CONFIG,
   "preact-ts": PREACT_TS_CONFIG,
+  solid: SOLID_CONFIG,
+  "solid-ts": SOLID_TS_CONFIG,
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
