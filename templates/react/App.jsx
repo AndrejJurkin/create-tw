@@ -22,7 +22,7 @@ function App() {
             Create Tailwind
           </h1>
           <p className="text-center mb-6 text-xl">
-            Please support this project by starring the repository on GitHub.
+            If you like this project, consider giving it a star on GitHub!
           </p>
           <div className="flex flex-row justify-center items-center gap-4">
             <a

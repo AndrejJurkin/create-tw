@@ -3,7 +3,7 @@ export function App() {
     <header className="h-screen bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col text-white p-20">
       <h1 className="text-5xl font-bold text-center mb-2">Create Tailwind</h1>
       <p className="text-center mb-6 text-xl">
-        Please support this project by starring the repository on GitHub!
+        If you like this project, consider giving it a star on GitHub!
       </p>
       <div className="flex flex-row justify-center items-center gap-4">
         <a
