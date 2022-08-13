@@ -377,6 +377,9 @@ export const SOLID_CONFIG: AppConfig = {
   twConfigExtension: ".cjs",
   deleteFiles: async ({ projectDir }) => {
     await fs.remove(path.join(projectDir, "pnpm-lock.yaml"));
+    await fs.remove(path.join(projectDir, "src/assets"));
+    await fs.remove(path.join(projectDir, "src/App.module.css"));
+    await fs.remove(path.join(projectDir, "src/logo.svg"));
   },
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
