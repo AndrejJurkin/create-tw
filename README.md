@@ -21,6 +21,16 @@ yarn create tw
 yearn create tw <project-name> --template <id> 
 ```
 
+#### pnpm
+```bash
+pnpm create tw
+
+# OR
+
+pnpm create tw <project-name> --template <id> 
+```
+
+
 ### Currently in very early stage of development
 Ideas, suggestions and bug reports are much appreciated.
 In the following days I'm planning to add support for React, Vue & Svelte with Vite. 
@@ -38,6 +48,7 @@ In the following days I'm planning to add support for React, Vue & Svelte with V
 |astro     | Astro      | create-astro    |
 |svelte-kit| Svelte Kit | create-svelte   |
 |preact    | Preact     | create-vite     |
+|solid    | Solid      | degit           |
 
 NOTE: Add the `-ts` postfix to the ID to install with TypeScript
 
