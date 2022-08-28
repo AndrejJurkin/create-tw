@@ -1,5 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import * as recast from "recast";
+import { Plugin } from "../config.js";
 
 /**
  * Create recast transformer that adds tailwind plugins to tailwind.config.js
@@ -7,7 +8,7 @@ import * as recast from "recast";
  * @param plugins tailwind plugins
  * @returns transformer function that adds tailwind plugins to tailwind.config.js
  */
-const addPluginsTransformer = (plugins: string[]) => {
+const addPluginsTransformer = (plugins: Plugin[]) => {
   return (code: any) => {
     const ast = recast.parse(code);
 
@@ -16,7 +17,9 @@ const addPluginsTransformer = (plugins: string[]) => {
         if (path.node.key.name === "plugins") {
           path.node.value.elements = [
             ...path.node.value.elements,
-            ...plugins.map((plugin) => recast.parse(`require('${plugin}')`)),
+            ...plugins
+              .filter((p) => p.addConfigImport)
+              .map((plugin) => recast.parse(`require("${plugin.package}")`)),
           ];
         }
         this.traverse(path);

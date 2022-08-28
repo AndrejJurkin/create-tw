@@ -123,8 +123,9 @@ async function readDependencies() {
     type: "checkbox",
     message: "Which dependencies would you like to include?",
     choices: supportedDependencies.map((dependency) => ({
-      name: dependency,
+      name: dependency.package,
       checked: false,
+      value: dependency,
     })),
   });
 
@@ -152,8 +153,9 @@ async function readPlugins() {
     type: "checkbox",
     message: "Which plugins would you like to include?",
     choices: supportedPlugins.map((dependency) => ({
-      name: dependency,
+      name: dependency.package,
       checked: false,
+      value: dependency,
     })),
   });
 

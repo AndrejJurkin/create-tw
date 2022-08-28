@@ -11,18 +11,68 @@ import createSvelteCommand from "./commands/createSvelte.js";
 import createSolidCommand from "./commands/createSolid.js";
 
 /**
+ * Node dependency
+ */
+export interface Dependency {
+  package: string;
+  type: "dev" | "prod";
+}
+
+/**
+ * Tailwind CSS Plugin definition
+ */
+export interface Plugin {
+  package: string;
+  addConfigImport: boolean;
+}
+
+/**
  * The extra dependencies that we allow to select from when creating a new application.
  */
-export const supportedDependencies = ["prettier", "clsx"] as const;
+export const supportedDependencies: readonly Dependency[] = [
+  {
+    package: "prettier",
+    type: "dev",
+  },
+  {
+    package: "clsx",
+    type: "dev",
+  },
+  {
+    package: "tailwind-merge",
+    type: "prod",
+  },
+];
 
 /**
  * The TailwindCSS plugins that we allow to select from when creating a new application.
  */
-export const supportedPlugins = [
-  "@tailwindcss/typography",
-  "@tailwindcss/forms",
-  "@tailwindcss/aspect-ratio",
-] as const;
+export const supportedPlugins: readonly Plugin[] = [
+  {
+    package: "@tailwindcss/typography",
+    addConfigImport: true,
+  },
+  {
+    package: "@tailwindcss/forms",
+    addConfigImport: true,
+  },
+  {
+    package: "@tailwindcss/aspect-ratio",
+    addConfigImport: true,
+  },
+  {
+    package: "@tailwindcss/line-clamp",
+    addConfigImport: true,
+  },
+  {
+    package: "daisyui",
+    addConfigImport: true,
+  },
+  {
+    package: "prettier-plugin-tailwindcss",
+    addConfigImport: true,
+  },
+];
 
 /**
  * The app ids that we currently support.
@@ -83,7 +133,7 @@ export interface AppConfig {
   templateDir: string;
   scaffoldingTool: string;
   twConfigExtension: string;
-  twDependencies?: string[];
+  twDependencies?: readonly Dependency[];
   skipTailwindInstall?: boolean;
   copyTemplate: (userInput: UserInput) => Promise<void>;
   deleteFiles?: (userInput: UserInput) => Promise<void>;
@@ -298,7 +348,12 @@ export const SVELTE_KIT_CONFIG: AppConfig = {
   templateDir: path.join(PKG_ROOT, "templates/svelte-kit"),
   scaffoldingTool: "create-svelte",
   twConfigExtension: ".cjs",
-  twDependencies: ["svelte-preprocess"],
+  twDependencies: [
+    {
+      package: "svelte-preprocess",
+      type: "dev",
+    },
+  ],
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(SVELTE_KIT_CONFIG.templateDir, "__layout.svelte"),
