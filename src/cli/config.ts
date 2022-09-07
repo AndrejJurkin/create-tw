@@ -356,12 +356,12 @@ export const SVELTE_KIT_CONFIG: AppConfig = {
   ],
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
-      path.join(SVELTE_KIT_CONFIG.templateDir, "__layout.svelte"),
-      path.join(projectDir, "src/routes/__layout.svelte"),
+      path.join(SVELTE_KIT_CONFIG.templateDir, "+layout.svelte"),
+      path.join(projectDir, "src/routes/+layout.svelte"),
     );
     await fs.copy(
-      path.join(SVELTE_KIT_CONFIG.templateDir, "index.svelte"),
-      path.join(projectDir, "src/routes/index.svelte"),
+      path.join(SVELTE_KIT_CONFIG.templateDir, "+page.svelte"),
+      path.join(projectDir, "src/routes/+page.svelte"),
     );
     await fs.copy(
       path.join(SVELTE_KIT_CONFIG.templateDir, "svelte.config.js"),
