@@ -1,8 +1,9 @@
-<img width="1232" alt="image" src="https://user-images.githubusercontent.com/6149523/183829179-d46d555e-d4a0-4dec-9032-be30cc765038.png">
+<img width="1205" alt="image" src="https://user-images.githubusercontent.com/6149523/189049049-36882abb-5a97-460a-929b-cb19b7178153.png">
 
 # Create Tailwind (create-tw)
 ### The easiest way to get started with TailwindCSS.
-It uses popular scaffolding scripts like `create-next-app` or `create-vite` to scaffold projects and then configures TailwindCSS to work with your project out of the box.
+
+It uses popular scaffolding scripts like `create-next-app`, `create-vite`, `create-astro`, or `create-svelte` to scaffold projects and then configures TailwindCSS to work with your project out of the box.
 
 #### npx
 ```bash
@@ -29,6 +30,24 @@ pnpm create tw
 
 pnpm create tw <project-name> --template <id> 
 ```
+1. Pick project type
+    - Nextjs (create-next-app)
+    - Vanilla (create-vite)
+    - React (create-vite)
+    - Vue (create-vite)
+    - Astro (create-astro)
+    - Svelte (create-svelte)
+    - Preact (create-vite)
+    - Solid (degit)
+2. Pick language
+    - TypeScript
+    - JavaScript
+3. Pick dependencies
+    - Prettier, clsx, etc.
+4. Pick Plugins
+    - Daisy UI, @tailwindcss/typography, etc
+  
+It's ready! ✅
 
 
 ### Currently in very early stage of development
