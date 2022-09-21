@@ -1,4 +1,4 @@
-<img width="1205" alt="image" src="https://user-images.githubusercontent.com/6149523/189049049-36882abb-5a97-460a-929b-cb19b7178153.png">
+<img width="1232" alt="image" src="https://user-images.githubusercontent.com/23008566/188459823-741bddb1-7f0f-4e2d-a7ba-e4db602fc40a.gif">
 
 # Create Tailwind (create-tw)
 ### The easiest way to get started with TailwindCSS.
