@@ -4,7 +4,7 @@ import path from "path";
 import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
-import { UserInput } from "../config.js";
+import { UserInput, supportedNuxtModule } from "../config.js";
 
 /**
  * Install dependencies for the project.
@@ -15,36 +15,47 @@ import { UserInput } from "../config.js";
 export default async function installDependencies(input: UserInput) {
   const { plugins, projectDir } = input;
 
-  const devDependencies = input.dependencies.filter(
-    (d) => dependenciesMap[d] === "dev",
-  );
-  const dependencies = input.dependencies.filter(
-    (d) => dependenciesMap[d] === "dependencies",
-  );
-  const twDependencies = input.appConfig.twDependencies ?? [];
+  const devDependencies = input.dependencies
+    .filter((d) => d.type === "dev")
+    .map((d) => d.package);
+
+  const dependencies = input.dependencies
+    .filter((d) => d.type === "prod")
+    .map((d) => d.package);
+  
+  const module = supportedNuxtModule.map((d) => d.package);
+
+  const twDependencies =
+    input.appConfig.twDependencies?.map((d) => d.package) ?? [];
+
+  const twPlugins = plugins.map((p) => p.package);
 
   const devPackages = [
     "tailwindcss",
     "postcss",
     "autoprefixer",
-    ...twDependencies,
-    ...plugins,
     ...devDependencies,
+    ...twDependencies,
+    ...twPlugins,
+    ...module
   ];
 
   const spinner = ora(`Installing dependencies`).start();
+
   await installPackages({
     dev: true,
     projectDir,
     packageManager: getPackageManager(),
     packages: devPackages,
   });
+
   await installPackages({
     dev: false,
     projectDir,
     packageManager: getPackageManager(),
     packages: dependencies,
   });
+
   spinner.succeed(`Dependencies installed`);
 
   // If prettier is in dependencies create prettier config and prettier ignore files
@@ -58,9 +69,3 @@ export default async function installDependencies(input: UserInput) {
     spinner.succeed(`.prettierrc and .prettierignore created`);
   }
 }
-
-const dependenciesMap: Record<string, "dev" | "dependencies"> = {
-  prettier: "dev",
-  "svelte-preprocess": "dev",
-  clsx: "dependencies",
-};

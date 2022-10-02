@@ -14,12 +14,14 @@ import {
   getConfig,
   supportedDependencies,
   supportedPlugins,
+  supportedNuxtModule,
   Language,
 } from "./config.js";
 import path from "path";
 
 const DEFAULTS: UserInput = {
   projectName: "tailwind-app",
+  modules: [],
   plugins: [],
   dependencies: [],
   packageManager: getPackageManager(),
@@ -74,6 +76,7 @@ export async function readInput() {
   }
 
   input.dependencies = await readDependencies();
+  input.modules = await readModule();
   input.plugins = await readPlugins();
   input.projectDir = path.resolve(process.cwd(), input.projectName);
 
@@ -108,10 +111,29 @@ async function readTemplateId(types: TemplateId[]) {
       name: getConfig(t)?.displayName,
       value: t,
     })),
+    pageSize: types.length,
     default: "nextjs",
   });
 
   return templateId;
+}
+
+
+async function readModule() {
+  const { modules } = await inquirer.prompt<
+    Pick<UserInput, "modules">
+  >({
+    name: "module",
+    type: "checkbox",
+    message: "Using Nuxt 3? Select the '@nuxtjs/tailwindcss' module",
+    choices: supportedNuxtModule.map((dependency) => ({
+      name: dependency.package,
+      checked: false,
+      value: dependency,
+    })),
+  });
+
+  return modules;
 }
 
 async function readDependencies() {
@@ -122,8 +144,9 @@ async function readDependencies() {
     type: "checkbox",
     message: "Which dependencies would you like to include?",
     choices: supportedDependencies.map((dependency) => ({
-      name: dependency,
+      name: dependency.package,
       checked: false,
+      value: dependency,
     })),
   });
 
@@ -151,8 +174,9 @@ async function readPlugins() {
     type: "checkbox",
     message: "Which plugins would you like to include?",
     choices: supportedPlugins.map((dependency) => ({
-      name: dependency,
+      name: dependency.package,
       checked: false,
+      value: dependency,
     })),
   });
 
