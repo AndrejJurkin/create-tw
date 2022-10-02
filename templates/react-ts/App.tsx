@@ -19,7 +19,7 @@ function App() {
       <div className="h-screen bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col text-white">
         <header className="py-16">
           <h1 className="text-5xl font-bold text-center mb-2">
-            Create Tailwind App
+            Create Tailwind
           </h1>
           <p className="text-center mb-6 text-xl">
             Please support this project by starring the repository on GitHub.
@@ -67,7 +67,7 @@ function App() {
         <footer className="px-8 py-12 border-t border-gray-800">
           <div className="px-8 font-medium text-center">
             <a href="https://github.com/andrejjurkin/create-tailwind-app">
-              Create Tailwind App
+              Create Tailwind
             </a>
           </div>
         </footer>

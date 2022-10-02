@@ -20,6 +20,14 @@ export interface Dependency {
 }
 
 /**
+ * Nuxt module definition
+ */
+export interface Module {
+  package: string;
+  type: "dev" | "prod";
+}
+
+/**
  * Tailwind CSS Plugin definition
  */
 export interface Plugin {
@@ -27,13 +35,17 @@ export interface Plugin {
   addConfigImport: boolean;
 }
 
+
 /**
- * Nuxt module definition
+ * The '@nuxtjs/tailwindcss' module helps you set up Tailwind CSS (version 3) in your Nuxt 3 application in seconds.
  */
-export interface Module {
-  package: string;
-  type: "dev" | "prod";
-}
+export const supportedNuxtModule: readonly Module[] = [
+  {
+    package: "@nuxtjs/tailwindcss",
+    type: "dev",
+  }
+];
+
 
 /**
  * The extra dependencies that we allow to select from when creating a new application.
@@ -52,16 +64,6 @@ export const supportedDependencies: readonly Dependency[] = [
     type: "prod",
   },
 ];
-
-/**
- * The '@nuxtjs/tailwindcss' module helps you set up Tailwind CSS (version 3) in your Nuxt 3 application in seconds.
- */
-export const supportedNuxtModule: readonly Module[] = [
-  {
-    package: "@nuxtjs/tailwindcss",
-    type: "dev",
-  }
-]
 
 /**
  * The TailwindCSS plugins that we allow to select from when creating a new application.

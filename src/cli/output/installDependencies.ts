@@ -18,12 +18,12 @@ export default async function installDependencies(input: UserInput) {
   const devDependencies = input.dependencies
     .filter((d) => d.type === "dev")
     .map((d) => d.package);
+  
+  const module = supportedNuxtModule.map((d) => d.package);
 
   const dependencies = input.dependencies
     .filter((d) => d.type === "prod")
     .map((d) => d.package);
-  
-  const module = supportedNuxtModule.map((d) => d.package);
 
   const twDependencies =
     input.appConfig.twDependencies?.map((d) => d.package) ?? [];
@@ -36,8 +36,8 @@ export default async function installDependencies(input: UserInput) {
     "autoprefixer",
     ...devDependencies,
     ...twDependencies,
-    ...twPlugins,
-    ...module
+    ...module,
+    ...twPlugins
   ];
 
   const spinner = ora(`Installing dependencies`).start();
