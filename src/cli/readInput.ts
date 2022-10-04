@@ -17,6 +17,7 @@ import {
   Language,
 } from "./config.js";
 import path from "path";
+import fs from "fs-extra";
 
 const DEFAULTS: UserInput = {
   projectName: "tailwind-app",
@@ -37,10 +38,23 @@ export async function readInput() {
     )
     .argument("[app]", "The name of the application")
     .option("--template <templateId>", "The template to use")
+    .option("--config <configPath>", "The path to the test config")
     .version(getVersion())
     .parse(process.argv);
 
-  const { template: templateId } = program.opts();
+  const { template: templateId, config } = program.opts();
+
+  if (config) {
+    const configPath = path.resolve(process.cwd(), config);
+    const configJson = fs.readFileSync(configPath, "utf-8");
+    const values = JSON.parse(configJson);
+
+    return {
+      ...DEFAULTS,
+      ...values,
+      appConfig: getConfig(values.appId),
+    };
+  }
 
   // Get project name from the first argument or prompt for it
   input.projectName = program.args[0] ?? (await readProjectName());
@@ -63,7 +77,6 @@ export async function readInput() {
     console.log("tid", tid);
     const language = await readLanguage();
     const templateIdKey = `${tid}${language === "ts" ? "-ts" : ""}`;
-    console.log("templateIdKey", templateIdKey);
     const config = getConfig(templateIdKey);
 
     if (!config) {

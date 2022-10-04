@@ -1,22 +1,25 @@
-export type PackageManager = "npm" | "yarn" | "pnpm";
+import { execSync } from "child_process";
 
-// TODO: Add support for pnpm
-export default function getPackageManager() {
-  const userAgent = process.env.npm_config_user_agent;
+export type PackageManager = "npm" | "pnpm" | "yarn";
 
-  if (userAgent) {
-    if (userAgent.includes("yarn")) {
+export default function getPackageManager(): PackageManager {
+  try {
+    const userAgent = process.env.npm_config_user_agent;
+    if (userAgent) {
+      if (userAgent.startsWith("yarn")) {
+        return "yarn";
+      } else if (userAgent.startsWith("pnpm")) {
+        return "pnpm";
+      }
+    }
+    try {
+      execSync("yarn --version", { stdio: "ignore" });
       return "yarn";
-    }
-
-    if (userAgent.includes("npm")) {
-      return "npm";
-    }
-
-    if (userAgent.includes("pnpm")) {
+    } catch {
+      execSync("pnpm --version", { stdio: "ignore" });
       return "pnpm";
     }
+  } catch {
+    return "npm";
   }
-
-  return "npm";
 }

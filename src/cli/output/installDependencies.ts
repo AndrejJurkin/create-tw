@@ -34,7 +34,7 @@ export default async function installDependencies(input: UserInput) {
     "autoprefixer",
     ...devDependencies,
     ...twDependencies,
-    ...twPlugins
+    ...twPlugins,
   ];
 
   const spinner = ora(`Installing dependencies`).start();

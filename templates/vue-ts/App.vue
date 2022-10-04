@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 // This starter template is using Vue 3 <script setup> SFCs
 // Check out https://vuejs.org/api/sfc-script-setup.html#script-setup
 import { onMounted } from "vue";
@@ -16,9 +16,9 @@ onMounted(() => {
 <template>
   <div class="bg-gray-800 h-screen text-white">
     <header class="py-16">
-      <h1 class="text-5xl font-bold text-center mb-6">Create Tailwind App</h1>
+      <h1 class="text-5xl font-bold text-center mb-6">Create Tailwind</h1>
       <p className="text-center mb-6 text-xl">
-        Please support this project by starring the repository on GitHub.
+        If you like this project, consider giving it a star on GitHub!
       </p>
 
       <div class="flex flex-row justify-center items-center gap-4">

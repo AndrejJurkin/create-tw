@@ -6,9 +6,9 @@
   class="h-screen bg-gradient-to-b from-gray-900 to-slate-800 flex flex-col text-white"
 >
   <header class="py-16">
-    <h1 class="text-4xl font-bold text-center mb-1">Create TW</h1>
+    <h1 class="text-4xl font-bold text-center mb-1">Create Tailwind</h1>
     <p class="text-center mb-6 text-neutral-300">
-      The Easiest Way To Get Started With Tailwind
+      If you like this project, consider giving it a star on GitHub!
     </p>
     <div class="flex flex-row justify-center items-center gap-4">
       <a
