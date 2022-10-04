@@ -14,14 +14,12 @@ import {
   getConfig,
   supportedDependencies,
   supportedPlugins,
-  supportedNuxtModule,
   Language,
 } from "./config.js";
 import path from "path";
 
 const DEFAULTS: UserInput = {
   projectName: "tailwind-app",
-  modules: [],
   plugins: [],
   dependencies: [],
   packageManager: getPackageManager(),
@@ -76,7 +74,6 @@ export async function readInput() {
   }
 
   input.dependencies = await readDependencies();
-  input.modules = await readModule();
   input.plugins = await readPlugins();
   input.projectDir = path.resolve(process.cwd(), input.projectName);
 
@@ -116,24 +113,6 @@ async function readTemplateId(types: TemplateId[]) {
   });
 
   return templateId;
-}
-
-
-async function readModule() {
-  const { modules } = await inquirer.prompt<
-    Pick<UserInput, "modules">
-  >({
-    name: "module",
-    type: "checkbox",
-    message: "Using Nuxt 3? Select the '@nuxtjs/tailwindcss' module",
-    choices: supportedNuxtModule.map((dependency) => ({
-      name: dependency.package,
-      checked: false,
-      value: dependency,
-    })),
-  });
-
-  return modules;
 }
 
 async function readDependencies() {

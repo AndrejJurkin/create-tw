@@ -28,14 +28,6 @@ export interface Plugin {
 }
 
 /**
- * Nuxt module definition
- */
-export interface Module {
-  package: string;
-  type: "dev" | "prod";
-}
-
-/**
  * The extra dependencies that we allow to select from when creating a new application.
  */
 export const supportedDependencies: readonly Dependency[] = [
@@ -52,16 +44,6 @@ export const supportedDependencies: readonly Dependency[] = [
     type: "prod",
   },
 ];
-
-/**
- * The '@nuxtjs/tailwindcss' module helps you set up Tailwind CSS (version 3) in your Nuxt 3 application in seconds.
- */
-export const supportedNuxtModule: readonly Module[] = [
-  {
-    package: "@nuxtjs/tailwindcss",
-    type: "dev",
-  }
-]
 
 /**
  * The TailwindCSS plugins that we allow to select from when creating a new application.
@@ -118,7 +100,6 @@ export const supportedTemplateIds = [
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
-export type NuxtModule = typeof supportedNuxtModule[number];
 export type Plugins = typeof supportedPlugins[number];
 export type TemplateId = typeof supportedTemplateIds[number];
 export type Language = "ts" | "js";
@@ -132,9 +113,6 @@ export interface UserInput {
 
   // Additional dependencies to install specified by the user.
   dependencies: Dependencies[];
-
-  // The Nuxt module(s) to install specified by the user
-  modules: NuxtModule[]
 
   // TailwindCSS plugins to install specified by the user.
   plugins: Plugins[];
@@ -152,7 +130,6 @@ export interface UserInput {
 export interface AppConfig {
   templateId: TemplateId;
   displayName: string;
-  modules?: Module[];
   dependencies?: Dependencies[];
   plugins?: Plugins[];
   language: Language;
@@ -218,24 +195,31 @@ export const NUXTJS_CONFIG: AppConfig = {
   templateDir: path.join(PKG_ROOT, "templates/nuxtjs"),
   scaffoldingTool: "nuxi init",
   twConfigExtension: ".js",
-    copyTemplate: async ({ projectDir }) => {
+  copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(NUXTJS_CONFIG.templateDir, "app.vue"),
       path.join(projectDir, "app.vue"),
-      );
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "pages", "index.vue"),
+      path.join(projectDir, "pages", "index.vue"),
+    );
 
     await fs.copy(
       path.join(NUXTJS_CONFIG.templateDir, "nuxt.config.js"),
       path.join(projectDir, "nuxt.config.js"),
     );
   },
-  getCssOutputPath: ({ projectDir }) => {
-    return path.join(projectDir, "assets", "main.css");
-  },
-  createInstallCommand: createNuxtCommand,
   deleteFiles: async ({ projectDir }) => {
     await fs.remove(path.join(projectDir, "nuxt.config.ts"));
   },
+
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "assets", "main.css");
+  },
+
+  createInstallCommand: createNuxtCommand,
 }
 
 
@@ -245,17 +229,23 @@ export const NUXTJS_TS_CONFIG: AppConfig = {
   language: "ts",
   templateDir: path.join(PKG_ROOT, "templates/nuxtjs-ts"),
   scaffoldingTool: "nuxi init",
-  twConfigExtension: ".ts",
-    copyTemplate: async ({ projectDir }) => {
+  twConfigExtension: ".js",
+  copyTemplate: async ({ projectDir }) => {
     await fs.copy(
-      path.join(NUXTJS_CONFIG.templateDir, "app.vue"),
+      path.join(NUXTJS_TS_CONFIG.templateDir, "app.vue"),
       path.join(projectDir, "app.vue"),
-      );
-      
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "pages", "index.vue"),
+      path.join(projectDir, "pages", "index.vue"),
+    );
+
     await fs.copy(
       path.join(NUXTJS_TS_CONFIG.templateDir, "nuxt.config.ts"),
       path.join(projectDir, "nuxt.config.ts"),
     );
+
   },
   getCssOutputPath: ({ projectDir }) => {
     return path.join(projectDir, "assets", "main.css");
@@ -410,10 +400,10 @@ export const ASTRO_CONFIG: AppConfig = {
   scaffoldingTool: "create-astro",
   twConfigExtension: ".cjs",
   skipTailwindInstall: true,
-  copyTemplate: async () => {},
+  copyTemplate: async () => { },
   getCssOutputPath: () => "",
   createInstallCommand: createAstroCommand,
-  deleteFiles: async () => {},
+  deleteFiles: async () => { },
 };
 
 export const ASTRO_TS_CONFIG: AppConfig = {
@@ -451,7 +441,7 @@ export const SVELTE_KIT_CONFIG: AppConfig = {
     return path.join(projectDir, "src/style.css");
   },
   createInstallCommand: createSvelteCommand,
-  deleteFiles: async () => {},
+  deleteFiles: async () => { },
 };
 
 export const SVELTE_KIT_TS_CONFIG: AppConfig = {
@@ -563,4 +553,3 @@ export const CONFIG_BY_ID: Record<string, AppConfig> = {
 };
 
 export const getConfig = (configId: string) => CONFIG_BY_ID[configId];
-

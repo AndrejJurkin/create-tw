@@ -4,7 +4,7 @@ import path from "path";
 import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
-import { UserInput, supportedNuxtModule } from "../config.js";
+import { UserInput } from "../config.js";
 
 /**
  * Install dependencies for the project.
@@ -22,8 +22,6 @@ export default async function installDependencies(input: UserInput) {
   const dependencies = input.dependencies
     .filter((d) => d.type === "prod")
     .map((d) => d.package);
-  
-  const module = supportedNuxtModule.map((d) => d.package);
 
   const twDependencies =
     input.appConfig.twDependencies?.map((d) => d.package) ?? [];
@@ -36,8 +34,7 @@ export default async function installDependencies(input: UserInput) {
     "autoprefixer",
     ...devDependencies,
     ...twDependencies,
-    ...twPlugins,
-    ...module
+    ...twPlugins
   ];
 
   const spinner = ora(`Installing dependencies`).start();
