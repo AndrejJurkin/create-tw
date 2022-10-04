@@ -21,6 +21,7 @@ export default function Home() {
               data-color-scheme="no-preference: dark; light: dark; dark: dark;"
               data-icon="octicon-star"
               data-size="large"
+              rel="noreferrer"
               data-show-count="true"
               aria-label="Star andrejjurkin/create-tailwind-app on GitHub"
             >
