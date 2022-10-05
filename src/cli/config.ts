@@ -80,11 +80,7 @@ export const supportedPlugins: readonly Plugin[] = [
  */
 export const supportedTemplateIds = [
   "nextjs",
-  "nextjs-ts",
-  "nuxtjs",
   "nuxtjs-ts",
-  "vanilla",
-  "vanilla-ts",
   "react",
   "react-ts",
   "vue",
@@ -97,6 +93,10 @@ export const supportedTemplateIds = [
   "preact-ts",
   "solid",
   "solid-ts",
+  "nextjs-ts",
+  "nuxtjs",
+  "vanilla",
+  "vanilla-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
