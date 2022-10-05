@@ -65,13 +65,5 @@ useHead({
         <h4>Officially maintained by Nuxt Labs</h4>
       </div>
     </main>
-
-    <footer class="mt-40 md:mt-48">
-      <div class="flex justify-center items-center">
-        <a href="https://github.com/andrejjurkin/create-tailwind-app">
-          Create Tailwind
-        </a>
-      </div>
-    </footer>
   </div>
 </template>
