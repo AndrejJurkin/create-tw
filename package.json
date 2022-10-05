@@ -22,7 +22,8 @@
     "test": "vitest",
     "release": "standard-version",
     "publish:beta": "npm run build && npm publish --tag beta",
-    "publish": " npm run build && npm publish"
+    "publish": " npm run build && npm publish",
+    "prettier-fix": "prettier --write ."
   },
   "keywords": [
     "tailwindcss",

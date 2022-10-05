@@ -9,4 +9,3 @@ export default function createSolidCommand(input: UserInput) {
 
   return parts.join(" ");
 }
-

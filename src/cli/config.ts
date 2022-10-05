@@ -7,7 +7,7 @@ import { PackageManager } from "../utils/getPackageManager.js";
 import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
-import { createNuxtCommand } from './commands/createNuxt.js';
+import { createNuxtCommand } from "./commands/createNuxt.js";
 import createSvelteCommand from "./commands/createSvelte.js";
 import createSolidCommand from "./commands/createSolid.js";
 
@@ -220,8 +220,7 @@ export const NUXTJS_CONFIG: AppConfig = {
   },
 
   createInstallCommand: createNuxtCommand,
-}
-
+};
 
 export const NUXTJS_TS_CONFIG: AppConfig = {
   templateId: "nuxtjs-ts",
@@ -245,14 +244,12 @@ export const NUXTJS_TS_CONFIG: AppConfig = {
       path.join(NUXTJS_TS_CONFIG.templateDir, "nuxt.config.ts"),
       path.join(projectDir, "nuxt.config.ts"),
     );
-
   },
   getCssOutputPath: ({ projectDir }) => {
     return path.join(projectDir, "assets", "main.css");
   },
   createInstallCommand: createNuxtCommand,
-
-}
+};
 
 export const VANILLA_CONFIG: AppConfig = {
   templateId: "vanilla",
@@ -400,10 +397,10 @@ export const ASTRO_CONFIG: AppConfig = {
   scaffoldingTool: "create-astro",
   twConfigExtension: ".cjs",
   skipTailwindInstall: true,
-  copyTemplate: async () => { },
+  copyTemplate: async () => {},
   getCssOutputPath: () => "",
   createInstallCommand: createAstroCommand,
-  deleteFiles: async () => { },
+  deleteFiles: async () => {},
 };
 
 export const ASTRO_TS_CONFIG: AppConfig = {
@@ -441,7 +438,7 @@ export const SVELTE_KIT_CONFIG: AppConfig = {
     return path.join(projectDir, "src/style.css");
   },
   createInstallCommand: createSvelteCommand,
-  deleteFiles: async () => { },
+  deleteFiles: async () => {},
 };
 
 export const SVELTE_KIT_TS_CONFIG: AppConfig = {
