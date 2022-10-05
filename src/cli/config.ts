@@ -195,6 +195,12 @@ export const NUXTJS_CONFIG: AppConfig = {
   templateDir: path.join(PKG_ROOT, "templates/nuxtjs"),
   scaffoldingTool: "nuxi init",
   twConfigExtension: ".js",
+  dependencies: [
+    {
+      package: "@nuxtjs/tailwindcss",
+      type: "dev",
+    },
+  ],
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(NUXTJS_CONFIG.templateDir, "app.vue"),
@@ -214,11 +220,9 @@ export const NUXTJS_CONFIG: AppConfig = {
   deleteFiles: async ({ projectDir }) => {
     await fs.remove(path.join(projectDir, "nuxt.config.ts"));
   },
-
   getCssOutputPath: ({ projectDir }) => {
     return path.join(projectDir, "assets", "main.css");
   },
-
   createInstallCommand: createNuxtCommand,
 };
 
@@ -229,6 +233,12 @@ export const NUXTJS_TS_CONFIG: AppConfig = {
   templateDir: path.join(PKG_ROOT, "templates/nuxtjs-ts"),
   scaffoldingTool: "nuxi init",
   twConfigExtension: ".js",
+  dependencies: [
+    {
+      package: "@nuxtjs/tailwindcss",
+      type: "dev",
+    },
+  ],
   copyTemplate: async ({ projectDir }) => {
     await fs.copy(
       path.join(NUXTJS_TS_CONFIG.templateDir, "app.vue"),

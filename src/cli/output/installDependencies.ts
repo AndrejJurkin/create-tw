@@ -1,3 +1,4 @@
+import { Dependency } from "./../config";
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
@@ -13,15 +14,19 @@ import { UserInput } from "../config.js";
  * @param projectDir Path to the project directory
  */
 export default async function installDependencies(input: UserInput) {
-  const { plugins, projectDir } = input;
+  const { plugins, projectDir, appConfig } = input;
 
   const devDependencies = input.dependencies
-    .filter((d) => d.type === "dev")
-    .map((d) => d.package);
+    .filter(filterDevDependency)
+    .map(mapPackage);
 
+  const appConfigDevDependencies =
+    appConfig.dependencies?.filter(filterDevDependency).map(mapPackage) ?? [];
+
+  // TODO: Add support for appConfig.dependencies
   const dependencies = input.dependencies
-    .filter((d) => d.type === "prod")
-    .map((d) => d.package);
+    .filter(filterProdDependency)
+    .map(mapPackage);
 
   const twDependencies =
     input.appConfig.twDependencies?.map((d) => d.package) ?? [];
@@ -35,6 +40,7 @@ export default async function installDependencies(input: UserInput) {
     ...devDependencies,
     ...twDependencies,
     ...twPlugins,
+    ...appConfigDevDependencies,
   ];
 
   const spinner = ora(`Installing dependencies`).start();
@@ -66,3 +72,9 @@ export default async function installDependencies(input: UserInput) {
     spinner.succeed(`.prettierrc and .prettierignore created`);
   }
 }
+
+const filterDevDependency = (d: Dependency) => d.type === "dev";
+
+const filterProdDependency = (d: Dependency) => d.type === "prod";
+
+const mapPackage = (d: Dependency) => d.package;
