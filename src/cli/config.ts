@@ -7,6 +7,7 @@ import { PackageManager } from "../utils/getPackageManager.js";
 import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
+import { createNuxtCommand } from './commands/createNuxt.js';
 import createSvelteCommand from "./commands/createSvelte.js";
 import createSolidCommand from "./commands/createSolid.js";
 
@@ -80,6 +81,8 @@ export const supportedPlugins: readonly Plugin[] = [
 export const supportedTemplateIds = [
   "nextjs",
   "nextjs-ts",
+  "nuxtjs",
+  "nuxtjs-ts",
   "vanilla",
   "vanilla-ts",
   "react",
@@ -184,6 +187,72 @@ export const NEXTJS_TS_CONFIG: AppConfig = {
   },
   createInstallCommand: createNextCommand,
 };
+
+export const NUXTJS_CONFIG: AppConfig = {
+  templateId: "nuxtjs",
+  displayName: `Nuxt ${chalk.dim("(nuxi init)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/nuxtjs"),
+  scaffoldingTool: "nuxi init",
+  twConfigExtension: ".js",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "app.vue"),
+      path.join(projectDir, "app.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "pages", "index.vue"),
+      path.join(projectDir, "pages", "index.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "nuxt.config.js"),
+      path.join(projectDir, "nuxt.config.js"),
+    );
+  },
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "nuxt.config.ts"));
+  },
+
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "assets", "main.css");
+  },
+
+  createInstallCommand: createNuxtCommand,
+}
+
+
+export const NUXTJS_TS_CONFIG: AppConfig = {
+  templateId: "nuxtjs-ts",
+  displayName: `${chalk.bold("Nuxt TS")} ${chalk.dim("(nuxi init)")}`,
+  language: "ts",
+  templateDir: path.join(PKG_ROOT, "templates/nuxtjs-ts"),
+  scaffoldingTool: "nuxi init",
+  twConfigExtension: ".js",
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "app.vue"),
+      path.join(projectDir, "app.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "pages", "index.vue"),
+      path.join(projectDir, "pages", "index.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "nuxt.config.ts"),
+      path.join(projectDir, "nuxt.config.ts"),
+    );
+
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "assets", "main.css");
+  },
+  createInstallCommand: createNuxtCommand,
+
+}
 
 export const VANILLA_CONFIG: AppConfig = {
   templateId: "vanilla",
@@ -331,10 +400,10 @@ export const ASTRO_CONFIG: AppConfig = {
   scaffoldingTool: "create-astro",
   twConfigExtension: ".cjs",
   skipTailwindInstall: true,
-  copyTemplate: async () => {},
+  copyTemplate: async () => { },
   getCssOutputPath: () => "",
   createInstallCommand: createAstroCommand,
-  deleteFiles: async () => {},
+  deleteFiles: async () => { },
 };
 
 export const ASTRO_TS_CONFIG: AppConfig = {
@@ -372,7 +441,7 @@ export const SVELTE_KIT_CONFIG: AppConfig = {
     return path.join(projectDir, "src/style.css");
   },
   createInstallCommand: createSvelteCommand,
-  deleteFiles: async () => {},
+  deleteFiles: async () => { },
 };
 
 export const SVELTE_KIT_TS_CONFIG: AppConfig = {
@@ -465,6 +534,8 @@ export const SOLID_TS_CONFIG: AppConfig = {
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
+  nuxtjs: NUXTJS_CONFIG,
+  "nuxtjs-ts": NUXTJS_TS_CONFIG,
   vanilla: VANILLA_CONFIG,
   "vanilla-ts": VANILLA_TS_CONFIG,
   react: REACT_CONFIG,
