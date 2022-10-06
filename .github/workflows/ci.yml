@@ -34,7 +34,7 @@ jobs:
         uses: actions/checkou@v3
 
       - name: Setup PNPM
-        uses: pnpm@action-setup@v2.2.1
+        uses: pnpm/action-setup@v2.2.1
 
       - name: Setup Node
         uses: actions/setup-node@v3
