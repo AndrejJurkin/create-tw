@@ -1,4 +1,4 @@
-import { Dependency , UserInput } from "./../config";
+import { Dependency, UserInput } from "./../config";
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
