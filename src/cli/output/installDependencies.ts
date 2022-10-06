@@ -1,11 +1,10 @@
-import { Dependency } from "./../config";
+import { Dependency , UserInput } from "./../config";
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
 import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
-import { UserInput } from "../config.js";
 
 /**
  * Install dependencies for the project.

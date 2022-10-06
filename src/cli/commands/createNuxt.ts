@@ -1,4 +1,3 @@
-import { resolvePacakgeManager } from "../../utils/resolvePackageManager.js";
 import { UserInput } from "../config.js";
 
 export function createNuxtCommand(input: UserInput) {

@@ -62,28 +62,27 @@ export async function readInput() {
   // If template id was provided in options, check if it is supported
   // If not, prompt for template id interactively
   if (await checkTemplateSupport(templateId)) {
-    const config = getConfig(templateId);
+    const tempateConfig = getConfig(templateId);
 
-    if (!config) {
+    if (!tempateConfig) {
       throw new Error(`Unknown template id: ${templateId}`);
     }
 
-    input.appConfig = config;
+    input.appConfig = tempateConfig;
   } else {
     // We filter out the TS templates, since we select the language in the next step
     const tid = await readTemplateId(
       supportedTemplateIds.filter((id) => !id.includes("ts")),
     );
-    console.log("tid", tid);
     const language = await readLanguage();
     const templateIdKey = `${tid}${language === "ts" ? "-ts" : ""}`;
-    const config = getConfig(templateIdKey);
+    const templateConfig = getConfig(templateIdKey);
 
-    if (!config) {
+    if (!templateConfig) {
       throw new Error(`Unknown template id: ${templateIdKey}`);
     }
 
-    input.appConfig = config;
+    input.appConfig = templateConfig;
   }
 
   input.dependencies = await readDependencies();

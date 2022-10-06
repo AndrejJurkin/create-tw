@@ -23,7 +23,9 @@
     "release": "standard-version",
     "publish:beta": "npm run build && npm publish --tag beta",
     "publish": " npm run build && npm publish",
-    "prettier-fix": "prettier --write ."
+    "prettier-fix": "prettier --write .",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix"
   },
   "keywords": [
     "tailwindcss",
