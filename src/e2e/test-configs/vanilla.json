@@ -1,0 +1,8 @@
+{
+  "projectName": "vanilla",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "vanilla",
+  "appConfig": "vanilla"
+}

@@ -1,0 +1,8 @@
+{
+  "projectName": "react",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "react",
+  "appConfig": "react"
+}

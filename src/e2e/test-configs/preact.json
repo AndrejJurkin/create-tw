@@ -1,0 +1,8 @@
+{
+  "projectName": "preact",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "preact",
+  "appConfig": "preact"
+}
