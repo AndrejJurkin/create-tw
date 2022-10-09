@@ -52,7 +52,7 @@ export async function readInput() {
     return {
       ...DEFAULTS,
       ...values,
-      appConfig: getConfig(values.appId),
+      appConfig: getConfig(values.appConfig),
     };
   }
 

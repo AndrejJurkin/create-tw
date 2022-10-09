@@ -1,0 +1,8 @@
+{
+  "projectName": "nextjs",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "nextjs",
+  "appConfig": "nextjs"
+}

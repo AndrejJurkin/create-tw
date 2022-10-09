@@ -1,0 +1,8 @@
+{
+  "projectName": "vue",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "vue",
+  "appConfig": "vue"
+}

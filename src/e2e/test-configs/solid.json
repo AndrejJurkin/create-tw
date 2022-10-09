@@ -1,0 +1,8 @@
+{
+  "projectName": "solid",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "solid",
+  "appConfig": "solid"
+}

@@ -1,0 +1,8 @@
+{
+  "projectName": "svelte",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "svelte",
+  "appConfig": "svelte"
+}

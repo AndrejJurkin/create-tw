@@ -1,0 +1,8 @@
+{
+  "projectName": "nuxtjs",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "pnpm",
+  "projectDir": "nuxtjs",
+  "appConfig": "nuxtjs"
+}
