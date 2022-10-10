@@ -28,6 +28,8 @@ jobs:
         run: pnpm build:nextjs
       - name: Start Nextjs
         run: cd dist/nextjs && yarn dev
+        env:
+          CI: true
       - name: Test Nextjs
         run: pnpm test:nextjs
       - uses: actions/upload-artifact@v3
