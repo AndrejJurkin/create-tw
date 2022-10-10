@@ -1,7 +1,7 @@
 name: Playwright Tests
 on:
   push:
-    branches: [main]
+    branches: [feat/e2e-tests]
   # pull_request:
   #   branches: [main]
 jobs:
@@ -13,12 +13,18 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 16
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 7
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
-      - name: Run Playwright tests
-        run: pnpm dlx playwright test --project=chromium
+      - name: Build Nextjs
+        run: pnpm build:nextjs
+      - name: Test Nextjs
+        run: pnpm test:nextjs
       - uses: actions/upload-artifact@v3
         if: always()
         with:
