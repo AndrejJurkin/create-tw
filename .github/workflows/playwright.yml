@@ -21,6 +21,8 @@ jobs:
         run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
+      - name: Build Project
+        run: pnpm run build
       - name: Build Nextjs
         run: pnpm build:nextjs
       - name: Test Nextjs
