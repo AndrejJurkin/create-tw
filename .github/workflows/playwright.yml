@@ -25,6 +25,8 @@ jobs:
         run: pnpm run build
       - name: Build Nextjs
         run: pnpm build:nextjs
+      - name: Start Nextjs
+        run: cd dist/nodejs && yarn dev
       - name: Test Nextjs
         run: pnpm test:nextjs
       - uses: actions/upload-artifact@v3
