@@ -10,13 +10,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: actions/setup-node@v3
-        with:
-          node-version: 16
       - name: Setup PNPM
         uses: pnpm/action-setup@v2.2.1
         with:
           version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "pnpm"
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
@@ -26,7 +27,7 @@ jobs:
       - name: Build Nextjs
         run: pnpm build:nextjs
       - name: Start Nextjs
-        run: cd dist/nodejs && yarn dev
+        run: cd dist/nextjs && yarn dev
       - name: Test Nextjs
         run: pnpm test:nextjs
       - uses: actions/upload-artifact@v3
