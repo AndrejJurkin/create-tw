@@ -6,7 +6,7 @@ test("Next.js", async ({ page }) => {
   expect(await page.innerText("h1")).toBe("Create Tailwind");
 
   // Wait 2 seconds
-  await page.waitForTimeout(2000);
+  await page.waitForTimeout(3000);
 
   await expect(page).toHaveScreenshot({
     maxDiffPixels: 100,
