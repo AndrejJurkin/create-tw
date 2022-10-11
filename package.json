@@ -28,7 +28,7 @@
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "build:nextjs": "cd dist && node index.js --config ../e2e/test-configs/nextjs.json",
-    "test:nextjs": "npx playwright test nextjs.spec.ts --update-snapshots",
+    "test:nextjs": "npx playwright test nextjs.spec.ts",
     "build:react": "cd dist && node index.js --config ../e2e/test-configs/react.json",
     "test:react": "npx playwright test react.spec.ts"
   },

@@ -2,7 +2,7 @@
   "projectName": "react",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "react",
   "appConfig": "react"
 }

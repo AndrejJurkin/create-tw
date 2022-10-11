@@ -7,6 +7,8 @@ import { devices } from "@playwright/test";
  */
 // require('dotenv').config();
 
+const COMMAND = process.env.COMMAND;
+
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
@@ -99,7 +101,7 @@ const config: PlaywrightTestConfig = {
 
   /* Run your local dev server before starting the tests */
   webServer: {
-    command: "cd dist/nextjs && yarn dev",
+    command: COMMAND,
     port: 3000,
     reuseExistingServer: !process.env.CI,
   },
