@@ -21,7 +21,7 @@ jobs:
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+        run: npx playwright install --with-deps chromium
       - name: Build Project
         run: pnpm run build
       - name: Build Nextjs
@@ -33,4 +33,7 @@ jobs:
         with:
           name: playwright-report
           path: playwright-report/
-          retention-days: 30
+          retention-days: 30a
+      - uses: EndBug/add-and-commit@v9
+        with:
+          message: [CI] Update snapshots
