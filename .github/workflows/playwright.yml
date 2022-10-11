@@ -28,6 +28,14 @@ jobs:
         run: pnpm build:nextjs
       - name: Test Nextjs
         run: pnpm test:nextjs
+        env:
+          COMMAND: "cd dist/nextjs && yarn dev"
+      - name: Build React
+        run: pnpm build:react
+      - name: Test React
+        run: pnpm test:react
+        env:
+          COMMAND: "cd dist/react && yarn dev"
       - uses: actions/upload-artifact@v3
         if: always()
         with:
