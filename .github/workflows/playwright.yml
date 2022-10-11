@@ -36,6 +36,7 @@ jobs:
         run: pnpm test:react
         env:
           COMMAND: "cd dist/react && yarn dev"
+          PORT: 5173
       - uses: actions/upload-artifact@v3
         if: always()
         with:

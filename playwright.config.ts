@@ -8,6 +8,7 @@ import { devices } from "@playwright/test";
 // require('dotenv').config();
 
 const COMMAND = process.env.COMMAND;
+const PORT = process.env.PORT || 3000;
 
 /**
  * See https://playwright.dev/docs/test-configuration.
