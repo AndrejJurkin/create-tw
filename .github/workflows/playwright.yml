@@ -36,4 +36,4 @@ jobs:
           retention-days: 30a
       - uses: EndBug/add-and-commit@v9
         with:
-          message: [CI] Update snapshots
+          message: "[CI] Update snapshots"
