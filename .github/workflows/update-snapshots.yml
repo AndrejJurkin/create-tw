@@ -29,26 +29,26 @@ jobs:
       - name: Build Nextjs
         run: pnpm build:nextjs
       - name: Test Nextjs
-        run: pnpm test:nextjs
+        run: pnpm test:nextjs --update-snapshots
         env:
-          COMMAND: "pnpm run:nextjs --update-snapshots"
+          COMMAND: "pnpm run:nextjs"
 
       # React
       - name: Build React
         run: pnpm build:react
       - name: Test React
-        run: pnpm test:react
+        run: pnpm test:react --update-snapshots
         env:
-          COMMAND: "pnpm run:react --update-snapshots"
+          COMMAND: "pnpm run:react"
           PORT: 5173
 
       # Vue
       - name: Build Vue
         run: pnpm build:vue
       - name: Test Vue
-        run: pnpm test:vue
+        run: pnpm test:vue --update-snapshots
         env:
-          COMMAND: "pnpm run:vue --update-snapshots"
+          COMMAND: "pnpm run:vue"
           PORT: 5173
 
       # Upload Test Results
