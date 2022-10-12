@@ -5,6 +5,8 @@ test("React", async ({ page }) => {
 
   expect(await page.innerText("h1")).toBe("Create Tailwind");
 
+  await page.waitForTimeout(3000);
+
   await expect(page).toHaveScreenshot({
     maxDiffPixels: 100,
   });

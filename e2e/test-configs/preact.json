@@ -2,7 +2,7 @@
   "projectName": "preact",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "preact",
   "appConfig": "preact"
 }

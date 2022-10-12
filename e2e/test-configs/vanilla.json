@@ -2,7 +2,7 @@
   "projectName": "vanilla",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "vanilla",
   "appConfig": "vanilla"
 }

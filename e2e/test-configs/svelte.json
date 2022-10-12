@@ -2,7 +2,7 @@
   "projectName": "svelte",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "svelte",
   "appConfig": "svelte"
 }

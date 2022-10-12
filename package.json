@@ -35,7 +35,16 @@
     "run:react": "cd dist/react && yarn dev",
     "build:vue": "cd dist && node index.js --config ../e2e/test-configs/vue.json",
     "test:vue": "npx playwright test vue.spec.ts",
-    "run:vue": "cd dist/vue && yarn dev"
+    "run:vue": "cd dist/vue && yarn dev",
+    "build:preact": "cd dist && node index.js --config ../e2e/test-configs/preact.json",
+    "test:preact": "npx playwright test preact.spec.ts",
+    "run:preact": "cd dist/preact && yarn dev",
+    "build:svelte": "cd dist && node index.js --config ../e2e/test-configs/svelte.json",
+    "test:svelte": "npx playwright test svelte.spec.ts",
+    "run:svelte": "cd dist/svelte && yarn dev",
+    "build:vanilla": "cd dist && node index.js --config ../e2e/test-configs/vanilla.json",
+    "test:vanilla": "npx playwright test vanilla.spec.ts",
+    "run:vanilla": "cd dist/vanilla && yarn dev"
   },
   "keywords": [
     "tailwindcss",
