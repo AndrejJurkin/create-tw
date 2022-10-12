@@ -9,3 +9,4 @@ nextjs-ts/
 react/
 react-ts/
 test
+playwright.config.ts

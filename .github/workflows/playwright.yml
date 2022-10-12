@@ -1,4 +1,4 @@
-name: Update Snapshots
+name: Run e2e Tests
 on:
   pull_request:
     branches: [main]
