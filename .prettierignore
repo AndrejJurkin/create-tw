@@ -5,3 +5,4 @@ dist/
 /vanilla-ts
 /nextjs
 /tests
+pnpm-lock.yaml
