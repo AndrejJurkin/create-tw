@@ -4,5 +4,5 @@
   "dependencies": [],
   "packageManager": "yarn",
   "projectDir": "svelte",
-  "appConfig": "svelte"
+  "appConfig": "svelte-kit"
 }
