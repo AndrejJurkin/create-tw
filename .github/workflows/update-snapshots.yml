@@ -1,5 +1,7 @@
 name: Update Snapshots
-on: [workflow_dispatch]
+on:
+  push:
+    branches: [feat/e2e-tests]
 jobs:
   update-snapshots:
     timeout-minutes: 60
@@ -29,7 +31,7 @@ jobs:
       - name: Test Nextjs
         run: pnpm test:nextjs
         env:
-          COMMAND: "pnpm run:nextjs"
+          COMMAND: "pnpm run:nextjs --update-snapshots"
 
       # React
       - name: Build React
@@ -37,7 +39,7 @@ jobs:
       - name: Test React
         run: pnpm test:react
         env:
-          COMMAND: "pnpm run:react"
+          COMMAND: "pnpm run:react --update-snapshots"
           PORT: 5173
 
       # Vue
@@ -46,7 +48,7 @@ jobs:
       - name: Test Vue
         run: pnpm test:vue
         env:
-          COMMAND: "pnpm run:vue"
+          COMMAND: "pnpm run:vue --update-snapshots"
           PORT: 5173
 
       # Upload Test Results
