@@ -1,7 +1,5 @@
 name: Update Snapshots
-on:
-  push:
-    branches: [feat/e2e-tests]
+on: [workflow_dispatch]
 jobs:
   update-snapshots:
     timeout-minutes: 60
