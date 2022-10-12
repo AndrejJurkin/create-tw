@@ -1,11 +1,7 @@
-name: Playwright Tests
-on:
-  push:
-    branches: []
-  # pull_request:
-  #   branches: [main]
+name: Update Snapshots
+on: [workflow_dispatch]
 jobs:
-  test:
+  update-snapshots:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -18,18 +14,24 @@ jobs:
         with:
           node-version: 16
           cache: "pnpm"
+
+      # Install dependencies and build CLI app
       - name: Install dependencies
         run: pnpm install
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps chromium
       - name: Build Project
         run: pnpm run build
+
+      # Nextjs
       - name: Build Nextjs
         run: pnpm build:nextjs
       - name: Test Nextjs
         run: pnpm test:nextjs
         env:
           COMMAND: "pnpm run:nextjs"
+
+      # React
       - name: Build React
         run: pnpm build:react
       - name: Test React
@@ -37,12 +39,25 @@ jobs:
         env:
           COMMAND: "pnpm run:react"
           PORT: 5173
+
+      # Vue
+      - name: Build Vue
+        run: pnpm build:vue
+      - name: Test Vue
+        run: pnpm test:vue
+        env:
+          COMMAND: "pnpm run:vue"
+          PORT: 5173
+
+      # Upload Test Results
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 30a
+
+      # Commit snapshot changes
       - uses: EndBug/add-and-commit@v9
         with:
           message: "[CI] Update snapshots"

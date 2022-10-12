@@ -29,8 +29,13 @@
     "lint:fix": "eslint . --ext .ts,.js --fix",
     "build:nextjs": "cd dist && node index.js --config ../e2e/test-configs/nextjs.json",
     "test:nextjs": "npx playwright test nextjs.spec.ts",
+    "run:nextjs": "cd dist/nextjs && yarn dev",
     "build:react": "cd dist && node index.js --config ../e2e/test-configs/react.json",
-    "test:react": "npx playwright test react.spec.ts --update-snapshots"
+    "test:react": "npx playwright test react.spec.ts",
+    "run:react": "cd dist/react && yarn dev",
+    "build:vue": "cd dist && node index.js --config ../e2e/test-configs/vue.json",
+    "test:vue": "npx playwright test vue.spec.ts",
+    "run:vue": "cd dist/vue && yarn dev"
   },
   "keywords": [
     "tailwindcss",
