@@ -51,6 +51,33 @@ jobs:
           COMMAND: "pnpm run:vue"
           PORT: 5173
 
+      # Preact
+      - name: Build Preact
+        run: pnpm build:preact
+      - name: Test Preact
+        run: pnpm test:preact --update-snapshots
+        env:
+          COMMAND: "pnpm run:preact"
+          PORT: 5173
+
+      # Svelte
+      - name: Build Svelte
+        run: pnpm build:svelte
+      - name: Test Svelte
+        run: pnpm test:svelte --update-snapshots
+        env:
+          COMMAND: "pnpm run:svelte"
+          PORT: 5173
+
+      # Vanilla
+      - name: Build Vanilla
+        run: pnpm build:vanilla
+      - name: Test Vanilla
+        run: pnpm test:vanilla --update-snapshots
+        env:
+          COMMAND: "pnpm run:vanilla"
+          PORT: 5173
+
       # Upload Test Results
       - uses: actions/upload-artifact@v3
         if: failure()

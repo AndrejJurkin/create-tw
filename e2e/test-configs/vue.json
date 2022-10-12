@@ -2,7 +2,7 @@
   "projectName": "vue",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "vue",
   "appConfig": "vue"
 }

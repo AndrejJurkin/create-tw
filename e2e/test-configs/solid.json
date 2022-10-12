@@ -2,7 +2,7 @@
   "projectName": "solid",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "solid",
   "appConfig": "solid"
 }

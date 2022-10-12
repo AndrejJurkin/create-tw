@@ -2,7 +2,7 @@
   "projectName": "nuxtjs",
   "plugins": [],
   "dependencies": [],
-  "packageManager": "pnpm",
+  "packageManager": "yarn",
   "projectDir": "nuxtjs",
   "appConfig": "nuxtjs"
 }
