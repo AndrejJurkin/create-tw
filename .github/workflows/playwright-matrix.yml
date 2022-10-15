@@ -8,20 +8,21 @@ jobs:
   e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
-    matrix:
-      include:
-        - variant: nextjs
-          port: 3000
-        - variant: react
-          port: 5173
-        - variant: vue
-          port: 5173
-        - variant: preact
-          port: 5173
-        - variant: svelte
-          port: 5173
-        - variant: vanilla
-          port: 5173
+    strategy:
+      matrix:
+        include:
+          - variant: nextjs
+            port: 3000
+          - variant: react
+            port: 5173
+          - variant: vue
+            port: 5173
+          - variant: preact
+            port: 5173
+          - variant: svelte
+            port: 5173
+          - variant: vanilla
+            port: 5173
     steps:
       - uses: actions/checkout@v3
       - name: Setup PNPM
