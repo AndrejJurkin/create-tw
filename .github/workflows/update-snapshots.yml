@@ -1,9 +1,24 @@
 name: Update Snapshots
 on: [workflow_dispatch]
 jobs:
-  update-snapshots:
+  Update Snapshots:
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - variant: nextjs
+            port: 3000
+          - variant: react
+            port: 5173
+          - variant: vue
+            port: 5173
+          - variant: preact
+            port: 5173
+          - variant: svelte
+            port: 5173
+          - variant: vanilla
+            port: 5173
     steps:
       - uses: actions/checkout@v3
       - name: Setup PNPM
@@ -23,60 +38,16 @@ jobs:
       - name: Build Project
         run: pnpm run build
 
-      # Nextjs
-      - name: Build Nextjs
-        run: pnpm build:nextjs
-      - name: Test Nextjs
-        run: pnpm test:nextjs --update-snapshots
+      # Build and run Playwright tests
+      - name: Build ${{ matrix.variant }}
+        run: pnpm build:${{ matrix.variant }}
+      - name: Test ${{ matrix.variant }}
+        run: pnpm test:${{ matrix.variant }} --update-snapshots
         env:
-          COMMAND: "pnpm run:nextjs"
+          COMMAND: "pnpm run:${{ matrix.variant }}"
+          PORT: ${{ matrix.port }}
 
-      # React
-      - name: Build React
-        run: pnpm build:react
-      - name: Test React
-        run: pnpm test:react --update-snapshots
-        env:
-          COMMAND: "pnpm run:react"
-          PORT: 5173
-
-      # Vue
-      - name: Build Vue
-        run: pnpm build:vue
-      - name: Test Vue
-        run: pnpm test:vue --update-snapshots
-        env:
-          COMMAND: "pnpm run:vue"
-          PORT: 5173
-
-      # Preact
-      - name: Build Preact
-        run: pnpm build:preact
-      - name: Test Preact
-        run: pnpm test:preact --update-snapshots
-        env:
-          COMMAND: "pnpm run:preact"
-          PORT: 5173
-
-      # Svelte
-      - name: Build Svelte
-        run: pnpm build:svelte
-      - name: Test Svelte
-        run: pnpm test:svelte --update-snapshots
-        env:
-          COMMAND: "pnpm run:svelte"
-          PORT: 5173
-
-      # Vanilla
-      - name: Build Vanilla
-        run: pnpm build:vanilla
-      - name: Test Vanilla
-        run: pnpm test:vanilla --update-snapshots
-        env:
-          COMMAND: "pnpm run:vanilla"
-          PORT: 5173
-
-      # Upload Test Results
+      # Upload Test Results on Failure
       - uses: actions/upload-artifact@v3
         if: failure()
         with:
