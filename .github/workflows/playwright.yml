@@ -63,8 +63,3 @@ jobs:
           name: playwright-report
           path: playwright-report/
           retention-days: 30a
-
-      # Commit snapshot changes
-      - uses: EndBug/add-and-commit@v9
-        with:
-          message: "[CI] Update snapshots"
