@@ -49,7 +49,7 @@ jobs:
 
       # Build and run Playwright tests
       - name: Build ${{ matrix.variant }}
-        run: cd dist && node.index.js --config ../e2e/test-configs/${{ matrix.variant }}.json
+        run: cd dist && node index.js --config ../e2e/test-configs/${{ matrix.variant }}.json
       - name: Test ${{ matrix.variant }}
         run: npx playwright test e2e/${{ matrix.variant }}/${{ matrix.variant}}.spec.ts --update-snapshots
         env:
