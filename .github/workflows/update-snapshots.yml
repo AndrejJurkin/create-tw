@@ -1,7 +1,11 @@
-name: Update Snapshots
-on: [workflow_dispatch]
+name: Run e2e Tests
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [test/add-tests]
 jobs:
-  Update Snapshots:
+  e2e:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
@@ -19,6 +23,11 @@ jobs:
             port: 5173
           - variant: vanilla
             port: 5173
+          - variant: nuxt
+            port: 3000
+          - variant: astro
+            port: 3000
+
     steps:
       - uses: actions/checkout@v3
       - name: Setup PNPM
@@ -40,11 +49,11 @@ jobs:
 
       # Build and run Playwright tests
       - name: Build ${{ matrix.variant }}
-        run: pnpm build:${{ matrix.variant }}
+        run: cd dist && node.index.js --config ../e2e/test-configs/${{ matrix.variant }}.json
       - name: Test ${{ matrix.variant }}
-        run: pnpm test:${{ matrix.variant }} --update-snapshots
+        run: npx playwright test e2e/${{ matrix.variant }}/${{ matrix.variant}}.spec.ts --update-snapshots
         env:
-          COMMAND: "pnpm run:${{ matrix.variant }}"
+          COMMAND: "cd dist/${{ matrix.variant }} && yarn dev"
           PORT: ${{ matrix.port }}
 
       # Upload Test Results on Failure
