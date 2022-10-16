@@ -3,7 +3,7 @@ on:
   pull_request:
     branches: [main]
   push:
-    branches: [test/add-tests]
+    branches: [test/nuxt-and-astro]
 jobs:
   e2e:
     timeout-minutes: 60
