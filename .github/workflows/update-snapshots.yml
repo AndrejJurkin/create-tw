@@ -23,7 +23,7 @@ jobs:
             port: 5173
           - variant: vanilla
             port: 5173
-          - variant: nuxt
+          - variant: nuxtjs
             port: 3000
           - variant: astro
             port: 3000

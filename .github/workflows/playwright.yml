@@ -2,8 +2,8 @@ name: Run e2e Tests
 on:
   pull_request:
     branches: [main]
-  push:
-    branches: [test/add-tests]
+  # push:
+  #   branches: [test/add-tests]
 jobs:
   e2e:
     timeout-minutes: 60
@@ -23,7 +23,7 @@ jobs:
             port: 5173
           - variant: vanilla
             port: 5173
-          - variant: nuxt
+          - variant: nuxtjs
             port: 3000
           - variant: astro
             port: 3000
@@ -49,7 +49,7 @@ jobs:
 
       # Build and run Playwright tests
       - name: Build ${{ matrix.variant }}
-        run: cd dist && node.index.js --config ../e2e/test-configs/${{ matrix.variant }}.json
+        run: cd dist && node index.js --config ../e2e/test-configs/${{ matrix.variant }}.json
       - name: Test ${{ matrix.variant }}
         run: npx playwright test e2e/${{ matrix.variant }}/${{ matrix.variant}}.spec.ts
         env:
