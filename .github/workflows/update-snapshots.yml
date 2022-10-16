@@ -67,5 +67,5 @@ jobs:
       # Commit snapshot changes
       - uses: EndBug/add-and-commit@v9
         with:
-          pull: "--rebase"
+          pull: "--rebase --autostash"
           message: "[CI] Update snapshots: ${{ matrix.variant }}"
