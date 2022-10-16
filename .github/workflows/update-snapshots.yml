@@ -1,9 +1,5 @@
 name: Run e2e Tests
-on:
-  pull_request:
-    branches: [main]
-  push:
-    branches: [test/nuxt-and-astro]
+on: [workflow_dispatch]
 jobs:
   e2e:
     timeout-minutes: 60

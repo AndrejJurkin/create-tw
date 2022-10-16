@@ -2,8 +2,6 @@ name: Run e2e Tests
 on:
   pull_request:
     branches: [main]
-  # push:
-  #   branches: [test/add-tests]
 jobs:
   e2e:
     timeout-minutes: 60
