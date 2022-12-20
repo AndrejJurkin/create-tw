@@ -52,3 +52,6 @@ Thumbs.db
 /vanilla-ts
 /tests
 /svelte
+/test-results/
+/playwright-report/
+/playwright/.cache/

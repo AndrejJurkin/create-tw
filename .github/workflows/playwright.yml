@@ -1,0 +1,63 @@
+name: Run e2e Tests
+on:
+  pull_request:
+    branches: [main]
+jobs:
+  e2e:
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        include:
+          - variant: nextjs
+            port: 3000
+          - variant: react
+            port: 5173
+          - variant: vue
+            port: 5173
+          - variant: preact
+            port: 5173
+          - variant: svelte
+            port: 5173
+          - variant: vanilla
+            port: 5173
+          - variant: nuxtjs
+            port: 3000
+          - variant: astro
+            port: 3000
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup PNPM
+        uses: pnpm/action-setup@v2.2.1
+        with:
+          version: 7
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 16
+          cache: "pnpm"
+
+      # Install dependencies and build CLI app
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps chromium
+      - name: Build Project
+        run: pnpm run build
+
+      # Build and run Playwright tests
+      - name: Build ${{ matrix.variant }}
+        run: cd dist && node index.js --config ../e2e/test-configs/${{ matrix.variant }}.json
+      - name: Test ${{ matrix.variant }}
+        run: npx playwright test e2e/${{ matrix.variant }}/${{ matrix.variant}}.spec.ts
+        env:
+          COMMAND: "cd dist/${{ matrix.variant }} && yarn dev"
+          PORT: ${{ matrix.port }}
+
+      # Upload Test Results on Failure
+      - uses: actions/upload-artifact@v3
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30a

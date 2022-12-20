@@ -1,0 +1,8 @@
+{
+  "projectName": "vanilla",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "vanilla",
+  "appConfig": "vanilla"
+}

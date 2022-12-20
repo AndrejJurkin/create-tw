@@ -1,0 +1,8 @@
+{
+  "projectName": "vue",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "vue",
+  "appConfig": "vue"
+}

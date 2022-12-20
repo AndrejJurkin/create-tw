@@ -1,0 +1,8 @@
+{
+  "projectName": "solid",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "solid",
+  "appConfig": "solid"
+}

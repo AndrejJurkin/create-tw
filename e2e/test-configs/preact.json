@@ -1,0 +1,8 @@
+{
+  "projectName": "preact",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "preact",
+  "appConfig": "preact"
+}

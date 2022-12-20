@@ -1,6 +1,6 @@
 {
   "name": "create-tw",
-  "version": "0.0.22",
+  "version": "1.1.1",
   "description": "CLI tool to create TailwindCSS projects using already existing scaffolding tools like create-next or create-vite",
   "main": "index.js",
   "repository": {
@@ -22,7 +22,11 @@
     "test": "vitest",
     "release": "standard-version",
     "publish:beta": "npm run build && npm publish --tag beta",
-    "publish": " npm run build && npm publish"
+    "publish": " npm run build && npm publish",
+    "prettier:check": "prettier --check .",
+    "prettier:fix": "prettier --write .",
+    "lint": "eslint . --ext .ts,.js",
+    "lint:fix": "eslint . --ext .ts,.js --fix"
   },
   "keywords": [
     "tailwindcss",
@@ -46,11 +50,13 @@
     "recast": "^0.21.1"
   },
   "devDependencies": {
+    "@playwright/test": "^1.27.0",
     "@swc/core": "^1.2.206",
     "@types/figlet": "^1.5.4",
     "@types/fs-extra": "^9.0.13",
     "@types/gradient-string": "^1.1.2",
     "@types/inquirer": "^8.2.1",
+    "@types/jest": "^29.1.2",
     "@types/node": "^18.0.4",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "@typescript-eslint/parser": "^5.30.0",
@@ -59,6 +65,7 @@
     "eslint-import-resolver-typescript": "^3.1.1",
     "eslint-plugin-import": "^2.26.0",
     "execa": "^6.1.0",
+    "jest": "^29.1.2",
     "prettier": "^2.7.1",
     "standard-version": "^9.5.0",
     "tsup": "^6.1.2",

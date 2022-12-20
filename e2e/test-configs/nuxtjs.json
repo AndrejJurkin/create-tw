@@ -1,0 +1,8 @@
+{
+  "projectName": "nuxtjs",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "nuxtjs",
+  "appConfig": "nuxtjs"
+}

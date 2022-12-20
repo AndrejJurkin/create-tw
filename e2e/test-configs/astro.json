@@ -1,0 +1,8 @@
+{
+  "projectName": "astro",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "astro",
+  "appConfig": "astro"
+}

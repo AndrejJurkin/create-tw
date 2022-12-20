@@ -7,6 +7,7 @@ import { PackageManager } from "../utils/getPackageManager.js";
 import { createViteCommand } from "./commands/createVite.js";
 import { createNextCommand } from "./commands/createNext.js";
 import { createAstroCommand } from "./commands/createAstro.js";
+import { createNuxtCommand } from "./commands/createNuxt.js";
 import createSvelteCommand from "./commands/createSvelte.js";
 import createSolidCommand from "./commands/createSolid.js";
 
@@ -79,9 +80,7 @@ export const supportedPlugins: readonly Plugin[] = [
  */
 export const supportedTemplateIds = [
   "nextjs",
-  "nextjs-ts",
-  "vanilla",
-  "vanilla-ts",
+  "nuxtjs-ts",
   "react",
   "react-ts",
   "vue",
@@ -94,6 +93,10 @@ export const supportedTemplateIds = [
   "preact-ts",
   "solid",
   "solid-ts",
+  "nextjs-ts",
+  "nuxtjs",
+  "vanilla",
+  "vanilla-ts",
 ] as const;
 
 export type Dependencies = typeof supportedDependencies[number];
@@ -183,6 +186,79 @@ export const NEXTJS_TS_CONFIG: AppConfig = {
     return path.join(projectDir, "styles", "globals.css");
   },
   createInstallCommand: createNextCommand,
+};
+
+export const NUXTJS_CONFIG: AppConfig = {
+  templateId: "nuxtjs",
+  displayName: `Nuxt ${chalk.dim("(nuxi init)")}`,
+  language: "js",
+  templateDir: path.join(PKG_ROOT, "templates/nuxtjs"),
+  scaffoldingTool: "nuxi init",
+  twConfigExtension: ".js",
+  dependencies: [
+    {
+      package: "@nuxtjs/tailwindcss",
+      type: "dev",
+    },
+  ],
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "app.vue"),
+      path.join(projectDir, "app.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "pages", "index.vue"),
+      path.join(projectDir, "pages", "index.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_CONFIG.templateDir, "nuxt.config.js"),
+      path.join(projectDir, "nuxt.config.js"),
+    );
+  },
+  deleteFiles: async ({ projectDir }) => {
+    await fs.remove(path.join(projectDir, "nuxt.config.ts"));
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "assets", "main.css");
+  },
+  createInstallCommand: createNuxtCommand,
+};
+
+export const NUXTJS_TS_CONFIG: AppConfig = {
+  templateId: "nuxtjs-ts",
+  displayName: `${chalk.bold("Nuxt TS")} ${chalk.dim("(nuxi init)")}`,
+  language: "ts",
+  templateDir: path.join(PKG_ROOT, "templates/nuxtjs-ts"),
+  scaffoldingTool: "nuxi init",
+  twConfigExtension: ".js",
+  dependencies: [
+    {
+      package: "@nuxtjs/tailwindcss",
+      type: "dev",
+    },
+  ],
+  copyTemplate: async ({ projectDir }) => {
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "app.vue"),
+      path.join(projectDir, "app.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "pages", "index.vue"),
+      path.join(projectDir, "pages", "index.vue"),
+    );
+
+    await fs.copy(
+      path.join(NUXTJS_TS_CONFIG.templateDir, "nuxt.config.ts"),
+      path.join(projectDir, "nuxt.config.ts"),
+    );
+  },
+  getCssOutputPath: ({ projectDir }) => {
+    return path.join(projectDir, "assets", "main.css");
+  },
+  createInstallCommand: createNuxtCommand,
 };
 
 export const VANILLA_CONFIG: AppConfig = {
@@ -465,6 +541,8 @@ export const SOLID_TS_CONFIG: AppConfig = {
 export const CONFIG_BY_ID: Record<string, AppConfig> = {
   nextjs: NEXTJS_CONFIG,
   "nextjs-ts": NEXTJS_TS_CONFIG,
+  nuxtjs: NUXTJS_CONFIG,
+  "nuxtjs-ts": NUXTJS_TS_CONFIG,
   vanilla: VANILLA_CONFIG,
   "vanilla-ts": VANILLA_TS_CONFIG,
   react: REACT_CONFIG,

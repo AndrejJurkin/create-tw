@@ -1,0 +1,8 @@
+{
+  "projectName": "react",
+  "plugins": [],
+  "dependencies": [],
+  "packageManager": "yarn",
+  "projectDir": "react",
+  "appConfig": "react"
+}
