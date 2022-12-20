@@ -66,6 +66,10 @@ export const supportedPlugins: readonly Plugin[] = [
     addConfigImport: true,
   },
   {
+    package: "@tailwindcss/container-queries",
+    addConfigImport: true,
+  },
+  {
     package: "daisyui",
     addConfigImport: true,
   },
