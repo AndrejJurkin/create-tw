@@ -27,22 +27,22 @@ useHead({
         <div class="flex justify-center items-center space-x-3">
           <a
             class="github-button"
-            href="https://github.com/andrejjurkin/create-tailwind-app"
+            href="https://github.com/andrejjurkin/create-tw"
             data-color-scheme="no-preference: dark; light: dark; dark: dark;"
             data-icon="octicon-star"
             data-size="large"
             data-show-count="true"
-            aria-label="Star andrejjurkin/create-tailwind-app on GitHub"
+            aria-label="Star andrejjurkin/create-tw on GitHub"
           >
             Star
           </a>
           <a
             class="github-button"
-            href="https://github.com/andrejjurkin/create-tailwind-app/discussions"
+            href="https://github.com/andrejjurkin/create-tw/discussions"
             data-color-scheme="no-preference: dark; light: dark; dark: dark;"
             data-icon="octicon-comment-discussion"
             data-size="large"
-            aria-label="Discuss andrejjurkin/create-tailwind-app on GitHub"
+            aria-label="Discuss andrejjurkin/create-tw on GitHub"
           >
             Discuss
           </a>
