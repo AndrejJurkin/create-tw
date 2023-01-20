@@ -17,23 +17,23 @@ export default function Home() {
           <div className="flex flex-row justify-center items-center gap-4">
             <a
               className="github-button"
-              href="https://github.com/andrejjurkin/create-tailwind-app"
+              href="https://github.com/andrejjurkin/create-tw"
               data-color-scheme="no-preference: dark; light: dark; dark: dark;"
               data-icon="octicon-star"
               data-size="large"
               rel="noreferrer"
               data-show-count="true"
-              aria-label="Star andrejjurkin/create-tailwind-app on GitHub"
+              aria-label="Star andrejjurkin/create-tw on GitHub"
             >
               Star
             </a>
             <a
               className="github-button"
-              href="https://github.com/andrejjurkin/create-tailwind-app/discussions"
+              href="https://github.com/andrejjurkin/create-tw/discussions"
               data-color-scheme="no-preference: dark; light: dark; dark: dark;"
               data-icon="octicon-comment-discussion"
               data-size="large"
-              aria-label="Discuss andrejjurkin/create-tailwind-app on GitHub"
+              aria-label="Discuss andrejjurkin/create-tw on GitHub"
             >
               Discuss
             </a>
@@ -60,7 +60,7 @@ export default function Home() {
 
         <footer className="px-8 py-12 border-t border-gray-800">
           <div className="px-8 font-medium text-center">
-            <a href="https://github.com/andrejjurkin/create-tailwind-app">
+            <a href="https://github.com/andrejjurkin/create-tw">
               Create Tailwind
             </a>
           </div>
