@@ -99,9 +99,9 @@ export const supportedTemplateIds = [
   "vanilla-ts",
 ] as const;
 
-export type Dependencies = typeof supportedDependencies[number];
-export type Plugins = typeof supportedPlugins[number];
-export type TemplateId = typeof supportedTemplateIds[number];
+export type Dependencies = (typeof supportedDependencies)[number];
+export type Plugins = (typeof supportedPlugins)[number];
+export type TemplateId = (typeof supportedTemplateIds)[number];
 export type Language = "ts" | "js";
 
 /**
