@@ -7,7 +7,5 @@ test("React", async ({ page }) => {
 
   await page.waitForTimeout(3000);
 
-  await expect(page).toHaveScreenshot({
-    maxDiffPixels: 100,
-  });
+  await expect(page).toHaveScreenshot();
 });
