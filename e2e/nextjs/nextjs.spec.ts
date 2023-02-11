@@ -7,7 +7,5 @@ test("Next.js", async ({ page }) => {
 
   await page.waitForTimeout(3000);
 
-  await expect(page).toHaveScreenshot("nextjs.png", {
-    maxDiffPixels: 100,
-  });
+  await expect(page).toHaveScreenshot("nextjs.png");
 });
