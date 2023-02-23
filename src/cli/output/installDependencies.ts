@@ -14,6 +14,22 @@ import installPackages from "../../utils/installPackages.js";
  */
 export default async function installDependencies(input: UserInput) {
   const { plugins, projectDir, appConfig } = input;
+  const pkgManager = getPackageManager();
+
+
+	const installDeps =
+		process.env?.INSTALL_DEPENDENCIES === undefined ||
+		process.env.INSTALL_DEPENDENCIES === "1"
+		? true
+		: false;
+
+	// Add yarn.lock in project folder so the dependencies installation won't fail
+	if (installDeps && pkgManager === 'yarn') {
+    await fs.copy(
+			path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
+			path.join(projectDir, "yarn.lock"),
+		);
+	}
 
   const devDependencies = input.dependencies
     .filter(filterDevDependency)
@@ -44,14 +60,14 @@ export default async function installDependencies(input: UserInput) {
 
   const spinner = ora(`Installing dependencies`).start();
 
-  await installPackages({
+  installDeps && await installPackages({
     dev: true,
     projectDir,
     packageManager: getPackageManager(),
     packages: devPackages,
   });
 
-  await installPackages({
+  installDeps && await installPackages({
     dev: false,
     projectDir,
     packageManager: getPackageManager(),
