@@ -5,6 +5,8 @@ import path from "path";
 import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
+import * as dotenv from "dotenv"; 
+dotenv.config();
 
 /**
  * Install dependencies for the project.
@@ -14,7 +16,7 @@ import installPackages from "../../utils/installPackages.js";
  */
 export default async function installDependencies(input: UserInput) {
   const { plugins, projectDir, appConfig } = input;
-  const pkgManager = getPackageManager();
+   const pkgManager = getPackageManager();
 
 
 	const installDeps =
@@ -22,15 +24,16 @@ export default async function installDependencies(input: UserInput) {
 		process.env.INSTALL_DEPENDENCIES === "1"
 		? true
 		: false;
-
+		
 	// Add yarn.lock in project folder so the dependencies installation won't fail
 	if (installDeps && pkgManager === 'yarn') {
-    await fs.copy(
+		 await fs.copy(
 			path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
 			path.join(projectDir, "yarn.lock"),
 		);
 	}
 
+	  
   const devDependencies = input.dependencies
     .filter(filterDevDependency)
     .map(mapPackage);
