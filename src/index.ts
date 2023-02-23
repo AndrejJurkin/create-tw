@@ -12,7 +12,6 @@ import createProject from "./cli/output/createProject.js";
 import path from 'path'
 import { COMMON_TEMPLATES_ROOT, REPEATED, INSTALL_DEP } from "./constants";
 
-
 process.once("SIGINT", () => {
   process.exit(1);
 });
@@ -62,6 +61,7 @@ async function main() {
   }
 
   await installTailwind(input);
+
   INSTALL_DEP && await installDependencies(input);
 
   logger.info(`\nProject created in ${chalk.green.bold(projectDir)}\n`);
@@ -73,6 +73,7 @@ async function main() {
       } dev`,
     )}\n`,
   );
+  
   logger.log("Happy coding!");
 
     if(!REPEATED) {
