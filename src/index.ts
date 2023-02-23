@@ -63,12 +63,13 @@ async function main() {
 
   await installTailwind(input);
 
-  const installDeps = process.env.INSTALL_DEPENDENCIES === undefined
-      || process.env.INSTALL_DEPENDENCIES === '1'
-      ? true : false;
+  const installDeps =
+    process.env.INSTALL_DEPENDENCIES === undefined ||
+    process.env.INSTALL_DEPENDENCIES === "1"
+      ? true
+      : false;
 
-    installDeps &&
-    (await installDependencies(input));
+  installDeps && (await installDependencies(input));
 
   logger.info(`\nProject created in ${chalk.green.bold(projectDir)}\n`);
   logger.info(`${chalk.cyan.bold(`cd ${projectName}`)}`);
@@ -80,9 +81,11 @@ async function main() {
     )}\n`,
   );
 
-  const repeatApplication = process.env.REPEAT_APPLICATION === undefined
-      || process.env.REPEAT_APPLICATION === '1'
-      ? true : false;
+  const repeatApplication =
+    process.env.REPEAT_APPLICATION === undefined ||
+    process.env.REPEAT_APPLICATION === "1"
+      ? true
+      : false;
 
   if (!repeatApplication) {
     process.exit(0);
