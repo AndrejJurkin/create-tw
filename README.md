@@ -82,3 +82,17 @@ npx create-tw@latest --template <id>
 # OR
 yarn create tw --template <id>
 ```
+
+### Developer friendly
+
+We have added 2 constants in './src/contants.ts'
+
+1. INSTALL_DEP : ( default true)
+   By default, to get the notmal behavior, it's set to true.
+   All dependencies will be installed by default
+   Set it to false to not install dependencies so you can skip this step.
+
+2. REPEATED : ( default false)
+   By default, after one installation, the application will stop.
+   Set this value to true and you will be able to perform a new installation
+   after the end of the last one.
