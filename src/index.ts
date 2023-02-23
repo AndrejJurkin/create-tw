@@ -9,8 +9,10 @@ import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
 import figlet from "figlet";
 import createProject from "./cli/output/createProject.js";
-import path from 'path'
+import path from "path";
 import { COMMON_TEMPLATES_ROOT } from "./constants";
+import * as dotenv from "dotenv"; // see https://github.com/motdotla/dotenv#how-do-i-use-dotenv-with-import
+dotenv.config();
 
 process.once("SIGINT", () => {
   process.exit(1);
@@ -33,7 +35,6 @@ async function main() {
 
   logger.info(`\nUsing: ${chalk.cyan.bold(pkgManager)}\n`);
 
-
   if (fs.existsSync(projectDir)) {
     // Ask to overwrite
     const answer = await inquirer.prompt({
@@ -51,17 +52,23 @@ async function main() {
   }
 
   await createProject(input);
-  
-    // Add yarn.lock in project folder so the dependencies installation won't fail
-  if (pkgManager === 'yarn') {
-	await fs.copy(
-		 path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
-		 path.join(projectDir, "yarn.lock"),
-	);
+
+  // Add yarn.lock in project folder so the dependencies installation won't fail
+  if (pkgManager === "yarn") {
+    await fs.copy(
+      path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
+      path.join(projectDir, "yarn.lock"),
+    );
   }
-  
+
   await installTailwind(input);
-  await installDependencies(input);
+
+  const installDeps = process.env.INSTALL_DEPENDENCIES === undefined
+      || process.env.INSTALL_DEPENDENCIES === '1'
+      ? true : false;
+
+    installDeps &&
+    (await installDependencies(input));
 
   logger.info(`\nProject created in ${chalk.green.bold(projectDir)}\n`);
   logger.info(`${chalk.cyan.bold(`cd ${projectName}`)}`);
@@ -72,9 +79,15 @@ async function main() {
       } dev`,
     )}\n`,
   );
-  logger.log("Happy coding!");
 
-  process.exit(0);
+  const repeatApplication = process.env.REPEAT_APPLICATION === undefined
+      || process.env.REPEAT_APPLICATION === '1'
+      ? true : false;
+
+  if (!repeatApplication) {
+    process.exit(0);
+  }
+  await main();
 }
 
 main().catch((e) => {

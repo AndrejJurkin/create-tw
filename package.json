@@ -9,9 +9,7 @@
   },
   "type": "module",
   "exports": "./dist/index.js",
-  "bin": {
-    "create-tw": "./dist/index.js"
-  },
+  "bin": "./dist/index.js",
   "engines": {
     "node": ">=14.16"
   },
@@ -42,6 +40,7 @@
     "chalk": "5.0.1",
     "commander": "^9.5.0",
     "create-svelte": "^2.3.4",
+    "dotenv": "^16.0.3",
     "figlet": "^1.5.2",
     "fs-extra": "^10.1.0",
     "gradient-string": "^2.0.2",
