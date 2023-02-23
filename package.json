@@ -9,7 +9,9 @@
   },
   "type": "module",
   "exports": "./dist/index.js",
-  "bin": "./dist/index.js",
+  "bin": {
+    "create-tw": "./dist/index.js"
+  },
   "engines": {
     "node": ">=14.16"
   },
