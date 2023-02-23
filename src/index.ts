@@ -79,7 +79,7 @@ async function main() {
     if(!REPEATED) {
         process.exit(0)
     }
-    main()
+    await main()
 }
 
 main().catch((e) => {
