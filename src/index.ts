@@ -64,7 +64,7 @@ async function main() {
   await installTailwind(input);
 
   const installDeps =
-    process.env.INSTALL_DEPENDENCIES === undefined ||
+    process.env?.INSTALL_DEPENDENCIES === undefined ||
     process.env.INSTALL_DEPENDENCIES === "1"
       ? true
       : false;
@@ -82,7 +82,7 @@ async function main() {
   );
 
   const repeatApplication =
-    process.env.REPEAT_APPLICATION === undefined ||
+    process.env?.REPEAT_APPLICATION === undefined ||
     process.env.REPEAT_APPLICATION === "1"
       ? true
       : false;
