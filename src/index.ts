@@ -81,6 +81,8 @@ async function main() {
     )}\n`,
   );
 
+   logger.log("Happy coding!");
+
   const repeatApplication =
     process.env?.REPEAT_APPLICATION === undefined ||
     process.env.REPEAT_APPLICATION === "1"
