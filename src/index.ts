@@ -9,8 +9,7 @@ import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
 import figlet from "figlet";
 import createProject from "./cli/output/createProject.js";
-import path from 'path'
-import { COMMON_TEMPLATES_ROOT } from "./constants";
+import { IS_REPEATED_APPLICATION } from "./constants.js";
 
 process.once("SIGINT", () => {
   process.exit(1);
@@ -33,7 +32,6 @@ async function main() {
 
   logger.info(`\nUsing: ${chalk.cyan.bold(pkgManager)}\n`);
 
-
   if (fs.existsSync(projectDir)) {
     // Ask to overwrite
     const answer = await inquirer.prompt({
@@ -51,15 +49,7 @@ async function main() {
   }
 
   await createProject(input);
-  
-    // Add yarn.lock in project folder so the dependencies installation won't fail
-  if (pkgManager === 'yarn') {
-	await fs.copy(
-		 path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
-		 path.join(projectDir, "yarn.lock"),
-	);
-  }
-  
+
   await installTailwind(input);
   await installDependencies(input);
 
@@ -74,7 +64,10 @@ async function main() {
   );
   logger.log("Happy coding!");
 
-  process.exit(0);
+  if (!IS_REPEATED_APPLICATION) {
+    process.exit(0);
+  }
+  await main();
 }
 
 main().catch((e) => {

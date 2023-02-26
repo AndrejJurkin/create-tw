@@ -14,6 +14,7 @@ specifiers:
   chalk: 5.0.1
   commander: ^9.5.0
   create-svelte: ^2.3.4
+  dotenv: ^16.0.3
   eslint: ^8.34.0
   eslint-config-prettier: ^8.6.0
   eslint-import-resolver-typescript: ^3.5.3
@@ -36,6 +37,7 @@ dependencies:
   chalk: 5.0.1
   commander: 9.5.0
   create-svelte: 2.3.4
+  dotenv: 16.0.3
   figlet: 1.5.2
   fs-extra: 10.1.0
   gradient-string: 2.0.2
@@ -2213,6 +2215,11 @@ packages:
     dependencies:
       is-obj: 2.0.0
     dev: true
+
+  /dotenv/16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
+    dev: false
 
   /dotgitignore/2.1.0:
     resolution: {integrity: sha512-sCm11ak2oY6DglEPpCB8TixLjWAxd3kJTs6UIcSasNYxXdFPV+YKlye92c8H4kKFqV5qYMIh7d+cYecEg0dIkA==}
