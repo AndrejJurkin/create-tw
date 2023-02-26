@@ -2,10 +2,13 @@ import { Dependency, UserInput } from "./../config";
 import fs from "fs-extra";
 import ora from "ora";
 import path from "path";
-import { COMMON_TEMPLATES_ROOT } from "../../constants.js";
+import {
+  COMMON_TEMPLATES_ROOT,
+  IS_INSTALL_DEPENDENCIES,
+} from "../../constants.js";
 import getPackageManager from "../../utils/getPackageManager.js";
 import installPackages from "../../utils/installPackages.js";
-import * as dotenv from "dotenv"; 
+import * as dotenv from "dotenv";
 dotenv.config();
 
 /**
@@ -16,24 +19,8 @@ dotenv.config();
  */
 export default async function installDependencies(input: UserInput) {
   const { plugins, projectDir, appConfig } = input;
-   const pkgManager = getPackageManager();
+  const pkgManager = getPackageManager();
 
-
-	const installDeps =
-		process.env?.INSTALL_DEPENDENCIES === undefined ||
-		process.env.INSTALL_DEPENDENCIES === "1"
-		? true
-		: false;
-		
-	// Add yarn.lock in project folder so the dependencies installation won't fail
-	if (installDeps && pkgManager === 'yarn') {
-		 await fs.copy(
-			path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
-			path.join(projectDir, "yarn.lock"),
-		);
-	}
-
-	  
   const devDependencies = input.dependencies
     .filter(filterDevDependency)
     .map(mapPackage);
@@ -63,21 +50,33 @@ export default async function installDependencies(input: UserInput) {
 
   const spinner = ora(`Installing dependencies`).start();
 
-  installDeps && await installPackages({
-    dev: true,
-    projectDir,
-    packageManager: getPackageManager(),
-    packages: devPackages,
-  });
+  if (IS_INSTALL_DEPENDENCIES) {
+    // Add yarn.lock in project folder so the dependencies installation won't fail
+    if (pkgManager === "yarn") {
+      await fs.copy(
+        path.join(COMMON_TEMPLATES_ROOT, "yarn.lock"),
+        path.join(projectDir, "yarn.lock"),
+      );
+    }
 
-  installDeps && await installPackages({
-    dev: false,
-    projectDir,
-    packageManager: getPackageManager(),
-    packages: dependencies,
-  });
+    await installPackages({
+      dev: true,
+      projectDir,
+      packageManager: getPackageManager(),
+      packages: devPackages,
+    });
 
-  spinner.succeed(`Dependencies installed`);
+    await installPackages({
+      dev: false,
+      projectDir,
+      packageManager: getPackageManager(),
+      packages: dependencies,
+    });
+
+    spinner.succeed(`Dependencies installed`);
+  } else {
+    spinner.succeed(`You choose to install them later. No problem!`);
+  }
 
   // If prettier is in dependencies create prettier config and prettier ignore files
   if (devDependencies.includes("prettier")) {

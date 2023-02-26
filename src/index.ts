@@ -9,8 +9,7 @@ import installTailwind from "./cli/output/installTailwind.js";
 import installDependencies from "./cli/output/installDependencies.js";
 import figlet from "figlet";
 import createProject from "./cli/output/createProject.js";
-import * as dotenv from "dotenv";
-dotenv.config();
+import { IS_REPEATED_APPLICATION } from "./constants.js";
 
 process.once("SIGINT", () => {
   process.exit(1);
@@ -32,7 +31,6 @@ async function main() {
   const pkgManager = getPackageManager();
 
   logger.info(`\nUsing: ${chalk.cyan.bold(pkgManager)}\n`);
-
 
   if (fs.existsSync(projectDir)) {
     // Ask to overwrite
@@ -66,13 +64,7 @@ async function main() {
   );
   logger.log("Happy coding!");
 
-  const repeatApplication =
-    process.env?.REPEAT_APPLICATION === undefined ||
-    process.env.REPEAT_APPLICATION === "1"
-      ? true
-      : false;
-
-  if (!repeatApplication) {
+  if (!IS_REPEATED_APPLICATION) {
     process.exit(0);
   }
   await main();
